@@ -2,6 +2,7 @@
 Aplicação responsável pela importar e processar os arquivos de transações feitas na venda de produtos por nossos clientes.
 
 ## Issues
+_A intenção aqui é demonstrar como as issues do projeto foram organizadas._
 
 * T1: Convenções para as mensagens dos commits, nomeclatura de branches e pipeline de desenvolvimento  
 * T2: Definir a linguagem, frameworks e arquitetura da aplicação
