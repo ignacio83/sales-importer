@@ -37,6 +37,14 @@ Estamos considerando também que o próprio desenvolvedor é responsável por te
 * Decisão: Trunk Based + Feature flags + testes automatizados
 * Alternativas consideradas: Gitflow
 
+### Pirâmide de testes
+Optamos por uma pirâmide que entende e minimiza a necessidade de um testes e2e, já que eles tendem a quebrar com muita
+frequência e levar muito tempo para executar. Optamos também por uma pirâmide que encoraja o uso de TDD, e que
+garanta o teste de todas as camadas da aplicação de forma independente e também conjunta.
+
+* Decisão: Artigo [Testing Strategies in a Microservice Architecture](https://martinfowler.com/articles/microservice-testing/)
+* Alternativas consideradas: Testes unitários + Testes integrados + Testes e2e
+
 ### Linguagem de programação
 Devido a urgência do projeto decidimos seguir pela stack de maior experiência, a que possibilita entregar mais 
 rapidamente o componente.
