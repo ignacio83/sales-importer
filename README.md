@@ -7,17 +7,18 @@ clientes.
 
 _A intenção aqui é demonstrar como as issues do projeto foram organizadas._
 
-| ID | Descrição                                                                                       | Status     |
-|----|-------------------------------------------------------------------------------------------------|------------|
-| T1 | Convenções para as mensagens dos commits, nomeclatura de branches e pipeline de desenvolvimento | Finalizado |
-| T2 | Definir a linguagem, frameworks e arquitetura da aplicação                                      | Finalizado |
-| T3 | Definir a pirâmide de testes                                                                    | Finalizado |
-| T4 | Definir o design de pacotes e camadas                                                           | Backlog    |
-| T5 | Criar a estrutura da aplicação de backend                                                       | Backlog    |
-| T6 | Configurar Checkstyle, Lint e Codeformatter para o backend                                      | Backlog    |
-| T7 | Criar a estrutura da aplicação de frontend                                                      | Backlog    |
-| T8 | Empacotar a aplicação utilizando Docker                                                         | Backlog    |
-| T9 | Modernizar o frontend utilizando um framework mais moderno como Angular ou React                | Backlog    |
+| ID  | Descrição                                                                                       | Status     |
+|-----|-------------------------------------------------------------------------------------------------|------------|
+| T1  | Convenções para as mensagens dos commits, nomeclatura de branches e pipeline de desenvolvimento | Finalizado |
+| T2  | Definir a linguagem, frameworks e arquitetura da aplicação                                      | Finalizado |
+| T3  | Definir a pirâmide de testes                                                                    | Finalizado |
+| T4  | Definir o design de pacotes e camadas                                                           | Backlog    |
+| T5  | Criar a estrutura da aplicação de backend                                                       | Backlog    |
+| T6  | Configurar Checkstyle, Lint e Code formatter para o backend                                     | Finalizado |
+| T7  | Criar a estrutura da aplicação de frontend                                                      | Backlog    |
+| T8  | Empacotar a aplicação utilizando Docker                                                         | Backlog    |
+| T9  | Modernizar o frontend utilizando um framework mais moderno como Angular ou React                | Backlog    |
+| T10 | Configurar Checkstyle, Lint e Code formatter para o frontend                                    | Backlog    |
 
 ## ADR
 
@@ -91,6 +92,14 @@ capacidade de cache e maior velocidade.
 
 * Decisão: `Gradle`
 * Alternativas consideradas: `Maven`, `Bazel`
+
+### Linter, Checkstyle and Code Formatter para o Backend
+
+Optamos pelo `ktlint`, pois ele possui uma série de regras embutidas e não necessita de muitas configurações ou
+discussões sobre qual padrão seguir.
+
+* Decisão: `ktlint`
+* Alternativas consideradas: `detekt`
 
 ### Framework de Frontend
 
