@@ -12,12 +12,12 @@ _A intenção aqui é demonstrar como as issues do projeto foram organizadas._
 | T1 | Convenções para as mensagens dos commits, nomeclatura de branches e pipeline de desenvolvimento | Finalizado |
 | T2 | Definir a linguagem, frameworks e arquitetura da aplicação                                      | Finalizado |
 | T3 | Definir a pirâmide de testes                                                                    | Finalizado |
-| T4 | Definir o design de pacotes e camadas                                                           |            |
-| T5 | Criar a estrutura da aplicação de backend                                                       |            |
-| T6 | Configurar Checkstyle e CodeFormatter para o backend                                            |            |
-| T7 | Criar a estrutura da aplicação de frontend                                                      |            |
-| T8 | Empacotar a aplicação utilizando Docker                                                         |            |
-| T9 | Modernizar o frontend utilizando um framework mais moderno como Angular ou React                |            |
+| T4 | Definir o design de pacotes e camadas                                                           | Backlog    |
+| T5 | Criar a estrutura da aplicação de backend                                                       | Backlog    |
+| T6 | Configurar Checkstyle, Lint e Codeformatter para o backend                                      | Backlog    |
+| T7 | Criar a estrutura da aplicação de frontend                                                      | Backlog    |
+| T8 | Empacotar a aplicação utilizando Docker                                                         | Backlog    |
+| T9 | Modernizar o frontend utilizando um framework mais moderno como Angular ou React                | Backlog    |
 
 ## ADR
 
@@ -95,8 +95,7 @@ capacidade de cache e maior velocidade.
 ### Framework de Frontend
 
 Devido a pouca experiência com frameworks para recentes para frontend, o prazo do projeto e a simplicidade do frontend,
-vamos seguir com Vanilla JS, a não necessidade de uma outra build tool, como npm ou yarn também foi considerado um ponto
-de simplificação do projeto. Mas está planejado a sustituição dessa desse frontend para o `Angular` ou `React` em um
+vamos seguir com `Vanilla JS`. Mas está planejado a sustituição dessa desse frontend para o `Angular` ou `React` em um
 futuro próximo.
 
 * Decisão: `Vanilla JS`
