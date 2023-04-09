@@ -3,6 +3,23 @@
 Aplicação responsável pela importar e processar os arquivos de transações feitas na venda de produtos por nossos
 clientes.
 
+## Guia do desenvolvedor
+
+Construindo a aplicação:
+```shell
+./gradlew build
+```
+
+Executando os testes unitários:
+```shell
+./gradlew test
+```
+
+Executando os testes de componente:
+```shell
+./gradlew component-test
+```
+
 ## Issues
 
 _A intenção aqui é demonstrar como as issues do projeto foram organizadas._
@@ -13,7 +30,7 @@ _A intenção aqui é demonstrar como as issues do projeto foram organizadas._
 | T2  | Definir a linguagem, frameworks e arquitetura da aplicação                                      | Finalizado |
 | T3  | Definir a pirâmide de testes                                                                    | Finalizado |
 | T4  | Definir o design de pacotes e camadas                                                           | Backlog    |
-| T5  | Criar a estrutura da aplicação de backend                                                       | Backlog    |
+| T5  | Criar a estrutura da aplicação de backend                                                       | Finalizado |
 | T6  | Configurar Checkstyle, Lint e Code formatter para o backend                                     | Finalizado |
 | T7  | Criar a estrutura da aplicação de frontend                                                      | Backlog    |
 | T8  | Empacotar a aplicação utilizando Docker                                                         | Backlog    |
@@ -60,6 +77,15 @@ garanta o teste de todas as camadas da aplicação de forma independente e tamb�
   Artigo [Testing Strategies in a Microservice Architecture](https://martinfowler.com/articles/microservice-testing/)
 * Alternativas consideradas: Testes unitários + Testes integrados + Testes e2e
 
+### Framework para testes de componente e integração do backend
+
+Construir testes de integração e componente possuem uma complexidade adicional aos testes unitários, pois é necessário
+orquestrar o start e o stop das dependências necessárias, optamos por utilizar o `Testcontainers`, devido a facilidade
+de integração com o `Spring`.
+
+* Decisão: [Testcontainers](https://www.testcontainers.org/)
+* Alternativas consideradas: Utilizar o pipeline de CI ou utilizar o docker-compose.
+
 ### Linguagem de programação do backend
 
 Devido a urgência do projeto decidimos seguir pela stack de maior experiência, a que possibilita entregar mais
@@ -68,7 +94,7 @@ rapidamente o componente.
 * Decisão: `Kotlin`
 * Alternativas consideradas: `Java`, `Go`
 
-### Frameworks
+### Frameworks do Backend
 
 Aplicações executadas por uma JVM tem um vasto leque de opções de frameworks, seguindo o direcionamento de prazo, vamos
 utilizar um framework mais estabelecido e que tenha muitas opções de integração e bibliotecas.
