@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
     id("org.springframework.boot") version "3.0.5"
@@ -29,6 +30,10 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.testcontainers:postgresql:1.18.0")
+}
+
+tasks.getByName<BootJar>("bootJar") {
+    this.archiveFileName.set("${archiveBaseName.get()}.${archiveExtension.get()}")
 }
 
 tasks.withType<KotlinCompile> {

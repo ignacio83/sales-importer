@@ -3,21 +3,50 @@
 Aplicação responsável pela importar e processar os arquivos de transações feitas na venda de produtos por nossos
 clientes.
 
+## Guia do usuário
+
+Executando e construindo todo o ambiente:
+
+**É necessário que o docker esteja instalado**
+
+```shell
+make up
+```
+
+Desligando todo o ambiente:
+
+**É necessário que o docker esteja instalado**
+
+```shell
+make down
+```
+
 ## Guia do desenvolvedor
 
+### backend
+
 Construindo a aplicação:
+
 ```shell
 ./gradlew build
 ```
 
 Executando os testes unitários:
+
 ```shell
 ./gradlew test
 ```
 
 Executando os testes de componente:
+
 ```shell
 ./gradlew component-test
+```
+
+Construindo a imagem docker:
+
+```shell
+docker build backend -f backend/Dockerfile -t sales-importer:latest
 ```
 
 ## Issues
@@ -33,9 +62,12 @@ _A intenção aqui é demonstrar como as issues do projeto foram organizadas._
 | T5  | Criar a estrutura da aplicação de backend                                                       | Finalizado |
 | T6  | Configurar Checkstyle, Lint e Code formatter para o backend                                     | Finalizado |
 | T7  | Criar a estrutura da aplicação de frontend                                                      | Backlog    |
-| T8  | Empacotar a aplicação utilizando Docker                                                         | Backlog    |
+| T8  | Empacotar o backend utilizando Docker                                                           | Finalizado |
 | T9  | Modernizar o frontend utilizando um framework mais moderno como Angular ou React                | Backlog    |
 | T10 | Configurar Checkstyle, Lint e Code formatter para o frontend                                    | Backlog    |
+| T11 | Empacotar o frontend utilizando Docker                                                          | Backlog    |
+| T12 | Construir pipeline de continuous integration para o backend                                     | Backlog    |
+| T13 | Construir pipeline de continuous integration para o frontend                                    | Backlog    |
 
 ## ADR
 
