@@ -53,7 +53,7 @@ tasks.withType<Test> {
     finalizedBy(tasks.jacocoTestReport)
 }
 
-tasks.create<Test>("component-test") {
+tasks.create<Test>("componentTest") {
     useJUnitPlatform {
         filter {
             includeTags("Component")

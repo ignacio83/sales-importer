@@ -40,7 +40,7 @@ Executando os testes unitários:
 Executando os testes de componente:
 
 ```shell
-./gradlew component-test
+./gradlew componentTest
 ```
 
 Construindo a imagem docker:
