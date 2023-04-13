@@ -68,6 +68,10 @@ _A intenção aqui é demonstrar como as issues do projeto foram organizadas._
 | T11 | Empacotar o frontend utilizando Docker                                                          | Backlog    |
 | T12 | Construir pipeline de continuous integration para o backend                                     | Backlog    |
 | T13 | Construir pipeline de continuous integration para o frontend                                    | Backlog    |
+| T14 | Construir serviço que realiza a importação do arquivo de vendas e armazena no banco de dados    | Backlog    |
+| T15 | Construir serviço que consulta todas as transações                                              | Backlog    |
+| T17 | Construir serviço que retorna o saldo final do produtor                                         | Backlog    |
+| T18 | Construir serviço que retorna o saldo final do afiliado                                         | Backlog    |
 
 ## ADR
 
