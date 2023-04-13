@@ -58,7 +58,7 @@ _A intenção aqui é demonstrar como as issues do projeto foram organizadas._
 | T1  | Convenções para as mensagens dos commits, nomeclatura de branches e pipeline de desenvolvimento | Finalizado |
 | T2  | Definir a linguagem, frameworks e arquitetura da aplicação                                      | Finalizado |
 | T3  | Definir a pirâmide de testes                                                                    | Finalizado |
-| T4  | Definir o design de pacotes e camadas                                                           | Backlog    |
+| T4  | Definir o design de pacotes e camadas                                                           | Finalizado |
 | T5  | Criar a estrutura da aplicação de backend                                                       | Finalizado |
 | T6  | Configurar Checkstyle, Lint e Code formatter para o backend                                     | Finalizado |
 | T7  | Criar a estrutura da aplicação de frontend                                                      | Backlog    |
@@ -158,6 +158,21 @@ discussões sobre qual padrão seguir.
 
 * Decisão: `ktlint`
 * Alternativas consideradas: `detekt`
+
+### Design de pacotes do backend
+
+O projeto é bem simples e poderiamos seguir com um design simplicado de três camadas: Controller, Service e
+Repository. Porém, esse modelo acopla a infraestrutura (como modelo do banco de dados) com regras de negócio o que
+prejudica a manutenção futura. Priorizamos aqui a manutenabilidade a longo prazo, por isso vamos seguir com
+Clean Architecture implementado com Arquitetura Hexagonal. A Arquitetura Hexagonal define um modelo de inversão de
+dependência que priorioza interfaces e facilita criação de testes unitários, além de manter a camada de infraestrutura
+desacoplada das regras de negócio.
+
+Optamos aqui por não ser tão restritivo quanto o Clean Architecture com relação ao uso de frameworks na camada de
+aplicação e dominio, é permitido o Spring também nessas camadas.
+
+* Decisão: Clean Architecture implementado com Arquitetura Hexagonal
+* Alternativas consideradas: Controller/Service/Repository
 
 ### Framework de Frontend
 
