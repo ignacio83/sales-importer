@@ -53,25 +53,25 @@ docker build backend -f backend/Dockerfile -t sales-importer:latest
 
 _A intenção aqui é demonstrar como as issues do projeto foram organizadas._
 
-| ID  | Descrição                                                                                       | Status     |
-|-----|-------------------------------------------------------------------------------------------------|------------|
-| T1  | Convenções para as mensagens dos commits, nomeclatura de branches e pipeline de desenvolvimento | Finalizado |
-| T2  | Definir a linguagem, frameworks e arquitetura da aplicação                                      | Finalizado |
-| T3  | Definir a pirâmide de testes                                                                    | Finalizado |
-| T4  | Definir o design de pacotes e camadas                                                           | Finalizado |
-| T5  | Criar a estrutura da aplicação de backend                                                       | Finalizado |
-| T6  | Configurar Checkstyle, Lint e Code formatter para o backend                                     | Finalizado |
-| T7  | Criar a estrutura da aplicação de frontend                                                      | Backlog    |
-| T8  | Empacotar o backend utilizando Docker                                                           | Finalizado |
-| T9  | Modernizar o frontend utilizando um framework mais moderno como Angular ou React                | Backlog    |
-| T10 | Configurar Checkstyle, Lint e Code formatter para o frontend                                    | Backlog    |
-| T11 | Empacotar o frontend utilizando Docker                                                          | Backlog    |
-| T12 | Construir pipeline de continuous integration para o backend                                     | Backlog    |
-| T13 | Construir pipeline de continuous integration para o frontend                                    | Backlog    |
-| T14 | Construir serviço que realiza a importação do arquivo de vendas e armazena no banco de dados    | Backlog    |
-| T15 | Construir serviço que consulta todas as transações                                              | Backlog    |
-| T17 | Construir serviço que retorna o saldo final do produtor                                         | Backlog    |
-| T18 | Construir serviço que retorna o saldo final do afiliado                                         | Backlog    |
+| ID  | Descrição                                                                                       | Status       |
+|-----|-------------------------------------------------------------------------------------------------|--------------|
+| T1  | Convenções para as mensagens dos commits, nomeclatura de branches e pipeline de desenvolvimento | Finalizado   |
+| T2  | Definir a linguagem, frameworks e arquitetura da aplicação                                      | Finalizado   |
+| T3  | Definir a pirâmide de testes                                                                    | Finalizado   |
+| T4  | Definir o design de pacotes e camadas                                                           | Finalizado   |
+| T5  | Criar a estrutura da aplicação de backend                                                       | Finalizado   |
+| T6  | Configurar Checkstyle, Lint e Code formatter para o backend                                     | Finalizado   |
+| T7  | Criar a estrutura da aplicação de frontend                                                      | Backlog      |
+| T8  | Empacotar o backend utilizando Docker                                                           | Finalizado   |
+| T9  | Modernizar o frontend utilizando um framework mais moderno como Angular ou React                | Backlog      |
+| T10 | Configurar Checkstyle, Lint e Code formatter para o frontend                                    | Backlog      |
+| T11 | Empacotar o frontend utilizando Docker                                                          | Backlog      |
+| T12 | Construir pipeline de continuous integration para o backend                                     | Backlog      |
+| T13 | Construir pipeline de continuous integration para o frontend                                    | Backlog      |
+| T14 | Construir serviço que realiza a importação do arquivo de vendas e armazena no banco de dados    | Em andamento |
+| T15 | Construir serviço que consulta todas as transações                                              | Backlog      |
+| T17 | Construir serviço que retorna o saldo final do produtor                                         | Backlog      |
+| T18 | Construir serviço que retorna o saldo final do afiliado                                         | Backlog      |
 
 ## ADR
 
