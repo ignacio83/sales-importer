@@ -178,6 +178,14 @@ aplicação e dominio, é permitido o Spring também nessas camadas.
 * Decisão: Clean Architecture implementado com Arquitetura Hexagonal
 * Alternativas consideradas: Controller/Service/Repository
 
+### Logging Library
+
+O `Spring` já utiliza o Logback para configuração do log, porém existe um library de log do Kotlin facilita o seu uso,
+já que tira proveito do mecanismo de lambas do Kotlin.
+
+* Decisão: [kotlin-logging](https://github.com/oshai/kotlin-logging)
+* Alterinativas: slf4j, logback
+
 ### Framework de Frontend
 
 Devido a pouca experiência com frameworks para recentes para frontend, o prazo do projeto e a simplicidade do frontend,
