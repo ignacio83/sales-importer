@@ -30,6 +30,7 @@ dependencies {
     implementation("io.github.microutils:kotlin-logging-jvm:3.0.5")
     runtimeOnly("org.postgresql:postgresql:42.6.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("com.ninja-squad:springmockk:4.0.2")
     testImplementation("org.testcontainers:postgresql:1.18.0")
     testImplementation("org.assertj:assertj-core:3.24.2")
 }

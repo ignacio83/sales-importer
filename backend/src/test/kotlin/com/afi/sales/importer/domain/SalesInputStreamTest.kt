@@ -1,7 +1,10 @@
 package com.afi.sales.importer.domain
 
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatList
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DynamicTest
+import org.junit.jupiter.api.DynamicTest.dynamicTest
 import org.junit.jupiter.api.TestFactory
 import java.lang.NumberFormatException
 import java.math.BigDecimal
@@ -25,7 +28,7 @@ class SalesInputStreamTest {
         return Stream.of(
             Scenario(
                 name = "should parse file with success when has content and is correct",
-                filename = "/sales.txt",
+                filename = "sales.txt",
                 expectedTransactionCount = 20,
                 containsExpectedTransactions = listOf(
                     Transaction(
@@ -67,34 +70,34 @@ class SalesInputStreamTest {
             ),
             Scenario(
                 name = "should throw exception when file is empty",
-                filename = "/sales_empty.txt",
+                filename = "sales_empty.txt",
                 expectedException = EmptySalesFileException::class,
-                expectedExceptionMessage = "File /sales_empty.txt is empty",
+                expectedExceptionMessage = "File sales_empty.txt is empty",
             ),
             Scenario(
                 name = "should throw exception when file is invalid",
-                filename = "/sales_invalid.txt",
+                filename = "sales_invalid.txt",
                 expectedException = BadFormedSalesFileException::class,
-                expectedExceptionMessage = "File /sales_invalid.txt is bad-formed",
+                expectedExceptionMessage = "File sales_invalid.txt is bad-formed",
                 expectedExceptionCause = NumberFormatException::class,
             ),
-        ).map {
-            DynamicTest.dynamicTest(it.name) {
-                val inputStream = this::class.java.getResource(it.filename)!!.openStream()
-                val salesInputStream = SalesInputStream(it.filename, inputStream)
-                if (it.expectedException != null) {
+        ).map { test ->
+            dynamicTest(test.name) {
+                val inputStream = this::class.java.getResource("/${test.filename}")!!.openStream()
+                val salesInputStream = SalesInputStream(test.filename, inputStream)
+                if (test.expectedException != null) {
                     val chain = assertThatThrownBy {
                         salesInputStream.parse()
-                    }.isInstanceOf(it.expectedException.java).hasMessage(it.expectedExceptionMessage)
-                    if (it.expectedExceptionCause != null) {
-                        chain.hasCauseInstanceOf(it.expectedExceptionCause!!.java)
+                    }.isInstanceOf(test.expectedException.java).hasMessage(test.expectedExceptionMessage)
+                    test.expectedExceptionCause?.let { expectedExceptionCause ->
+                        chain.hasCauseInstanceOf(expectedExceptionCause.java)
                     }
                 } else {
                     val sales = salesInputStream.parse()
                     val transactions = sales.getTransactions()
-                    assertThatList(transactions).containsAll(it.containsExpectedTransactions)
-                    assertThatList(sales.getTransactions()).hasSize(it.expectedTransactionCount)
-                    assertThat(sales.getTransactionsCount()).isEqualTo(it.expectedTransactionCount)
+                    assertThatList(transactions).containsAll(test.containsExpectedTransactions)
+                    assertThatList(sales.getTransactions()).hasSize(test.expectedTransactionCount)
+                    assertThat(sales.getTransactionsCount()).isEqualTo(test.expectedTransactionCount)
                 }
             }
         }

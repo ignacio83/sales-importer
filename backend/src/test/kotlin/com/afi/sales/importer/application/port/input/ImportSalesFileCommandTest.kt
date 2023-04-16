@@ -29,14 +29,14 @@ class ImportSalesFileCommandTest {
                 filename = "",
                 expectedException = IllegalArgumentException::class,
             ),
-        ).map {
-            dynamicTest(it.name) {
-                if (it.expectedException != null) {
+        ).map { test ->
+            dynamicTest(test.name) {
+                if (test.expectedException != null) {
                     assertThatThrownBy {
-                        ImportSalesFileCommand(it.filename, it.inputStream)
-                    }.isInstanceOf(it.expectedException.java)
+                        ImportSalesFileCommand(test.filename, test.inputStream)
+                    }.isInstanceOf(test.expectedException.java)
                 } else {
-                    ImportSalesFileCommand(it.filename, it.inputStream)
+                    ImportSalesFileCommand(test.filename, test.inputStream)
                 }
             }
         }
