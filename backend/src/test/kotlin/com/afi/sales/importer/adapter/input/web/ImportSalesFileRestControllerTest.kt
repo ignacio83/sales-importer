@@ -2,6 +2,7 @@ package com.afi.sales.importer.adapter.input.web
 
 import com.afi.sales.importer.application.port.input.ImportSalesFileCommand
 import com.afi.sales.importer.application.port.input.ImportSalesFileUseCase
+import com.afi.sales.importer.domain.EmptySalesFileException
 import com.afi.sales.importer.given
 import com.afi.sales.importer.then
 import com.afi.sales.importer.whenever
@@ -36,7 +37,7 @@ class ImportSalesFileRestControllerTest {
         data class Scenario(
             val name: String,
             val filename: String? = null,
-            val prepare: (ImportSalesFileUseCase) -> (Unit),
+            val given: (ImportSalesFileUseCase) -> (Unit),
             val expectedStatus: ResultMatcher,
             val expectedContent: ResultMatcher,
             val expectedFilename: String? = null,
@@ -44,10 +45,10 @@ class ImportSalesFileRestControllerTest {
         return Stream.of(
             Scenario(
                 name = "should be status 200 when file is provided",
-                filename = "sales.txt",
-                prepare = { uc ->
+                given = { uc ->
                     every { uc.execute(any()) } returns 10
                 },
+                filename = "sales.txt",
                 expectedStatus = status().isOk,
                 expectedContent = content().json(
                     """{
@@ -58,16 +59,37 @@ class ImportSalesFileRestControllerTest {
             ),
             Scenario(
                 name = "should be status 400 when file is not provided",
-                prepare = {
+                given = {
                     // Does nothing
                 },
                 expectedStatus = status().isBadRequest,
-                expectedContent = content().string(""),
+                expectedContent = content().json(
+                    """{
+                       "title":"Bad Request",
+                       "status":400,
+                       "detail":"Required part 'file' is not present."
+                    }""",
+                ),
+            ),
+            Scenario(
+                name = "should be status 422 when file is empty",
+                given = { uc ->
+                    every { uc.execute(any()) } throws EmptySalesFileException("sales_empty.tx")
+                },
+                filename = "sales_empty.txt",
+                expectedStatus = status().isUnprocessableEntity,
+                expectedContent = content().json(
+                    """{
+                       "title":"Unprocessable Entity",
+                       "status":422,
+                       "detail":"File sales_empty.tx is empty."
+                    }""",
+                ),
             ),
         ).map { test ->
             dynamicTest(test.name) {
                 given {
-                    test.prepare(importSalesFileUseCase)
+                    test.given(importSalesFileUseCase)
                 } whenever {
                     val file = test.filename?.let {
                         val inputStream = this::class.java.getResource("/$it")!!.openStream()
