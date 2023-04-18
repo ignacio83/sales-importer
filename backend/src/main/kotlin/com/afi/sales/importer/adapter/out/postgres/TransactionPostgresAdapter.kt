@@ -2,9 +2,16 @@ package com.afi.sales.importer.adapter.out.postgres
 
 import com.afi.sales.importer.application.port.out.InsertTransactionPort
 import com.afi.sales.importer.domain.Transaction
+import org.springframework.stereotype.Component
 
-class TransactionPostgresAdapter : InsertTransactionPort {
-    override fun insertTransaction(transaction: Transaction) {
-        TODO("Not yet implemented")
+@Component
+class TransactionPostgresAdapter(private val transactionRepository: TransactionRepository) : InsertTransactionPort {
+    override fun insertTransaction(transaction: Transaction): Long {
+        return TransactionEntity(
+            productDescription = transaction.productDescription,
+            salesPersonName = transaction.salesPersonName,
+            //value = transaction.value
+        )
+            .let(transactionRepository::save).id!!
     }
 }

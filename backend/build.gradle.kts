@@ -32,6 +32,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("com.ninja-squad:springmockk:4.0.2")
     testImplementation("org.testcontainers:postgresql:1.18.0")
+    testImplementation("com.h2database:h2")
     testImplementation("org.assertj:assertj-core:3.24.2")
 }
 
@@ -51,6 +52,15 @@ tasks.withType<Test> {
         filter {
             excludeTags("Integration")
             excludeTags("Component")
+        }
+    }
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.create<Test>("integrationTest") {
+    useJUnitPlatform {
+        filter {
+            includeTags("Integration")
         }
     }
     finalizedBy(tasks.jacocoTestReport)
