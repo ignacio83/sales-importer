@@ -37,6 +37,12 @@ Executando os testes unitários:
 ./gradlew test
 ```
 
+Executando os testes de integração:
+
+```shell
+./gradlew integrationTest
+```
+
 Executando os testes de componente:
 
 ```shell

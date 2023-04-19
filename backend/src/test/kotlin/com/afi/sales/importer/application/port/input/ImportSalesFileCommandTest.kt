@@ -1,6 +1,6 @@
 package com.afi.sales.importer.application.port.input
 
-import org.assertj.core.api.Assertions.assertThatThrownBy
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.DynamicTest.dynamicTest
 import org.junit.jupiter.api.TestFactory
@@ -31,12 +31,10 @@ class ImportSalesFileCommandTest {
             ),
         ).map { test ->
             dynamicTest(test.name) {
-                if (test.expectedException != null) {
-                    assertThatThrownBy {
-                        ImportSalesFileCommand(test.filename, test.inputStream)
-                    }.isInstanceOf(test.expectedException.java)
-                } else {
+                runCatching {
                     ImportSalesFileCommand(test.filename, test.inputStream)
+                }.onFailure { throwable ->
+                    assertThat(throwable).isInstanceOf(test.expectedException!!.java)
                 }
             }
         }

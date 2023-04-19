@@ -32,6 +32,8 @@ abstract class ComponentTest {
             override fun initialize(applicationContext: ConfigurableApplicationContext) {
                 TestPropertyValues.of(
                     "spring.datasource.url=${POSTGRESQL_CONTAINER.jdbcUrl}",
+                    "spring.datasource.username=${POSTGRESQL_CONTAINER.username}",
+                    "spring.datasource.password=${POSTGRESQL_CONTAINER.password}",
                 ).applyTo(applicationContext.environment)
             }
         }

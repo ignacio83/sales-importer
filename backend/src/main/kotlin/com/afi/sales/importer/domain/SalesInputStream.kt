@@ -12,7 +12,7 @@ class SalesInputStream(private val filename: String, private val inputStream: In
         inputStream.runCatching {
             bufferedReader().use {
                 it.lines().map { line ->
-                    val type = TransactionType.fromDigit(line.substring(0, 1).trim().toInt())
+                    val type = TransactionType.fromId(line.substring(0, 1).trim().toInt())
                     val date = ZonedDateTime.parse(line.substring(1, 26).trim())
                     val productDescription = line.substring(26, 56).trim()
                     val longValue = line.substring(56, 66).trim().toLong()
