@@ -23,36 +23,21 @@ make down
 
 ## Guia do desenvolvedor
 
-### backend
-
-Construindo a aplicação:
+Rodar todos os testes
 
 ```shell
-./gradlew build
+make test-all
 ```
 
-Executando os testes unitários:
+Rodar todos os testes e os linters
 
 ```shell
-./gradlew test
+make verify
 ```
 
-Executando os testes de integração:
-
+Construir o backend
 ```shell
-./gradlew integrationTest
-```
-
-Executando os testes de componente:
-
-```shell
-./gradlew componentTest
-```
-
-Construindo a imagem docker:
-
-```shell
-docker build backend -f backend/Dockerfile -t sales-importer:latest
+make build-backend
 ```
 
 ## Issues
