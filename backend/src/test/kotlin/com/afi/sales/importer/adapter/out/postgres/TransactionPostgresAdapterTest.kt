@@ -4,6 +4,8 @@ import com.afi.sales.importer.domain.Transaction
 import com.afi.sales.importer.domain.TransactionScenarios
 import com.afi.sales.importer.then
 import com.afi.sales.importer.whenever
+import java.util.stream.Stream
+import kotlin.reflect.KClass
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.DynamicTest.dynamicTest
@@ -15,8 +17,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager
 import org.springframework.context.annotation.Import
 import org.springframework.dao.DataIntegrityViolationException
 import org.testcontainers.shaded.org.apache.commons.lang3.RandomStringUtils
-import java.util.stream.Stream
-import kotlin.reflect.KClass
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)

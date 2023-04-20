@@ -1,9 +1,9 @@
 package com.afi.sales.importer.domain
 
-import mu.KotlinLogging
 import java.io.InputStream
 import java.math.BigDecimal
 import java.time.ZonedDateTime
+import mu.KotlinLogging
 
 class SalesInputStream(private val filename: String, private val inputStream: InputStream) {
     private val logger = KotlinLogging.logger {}

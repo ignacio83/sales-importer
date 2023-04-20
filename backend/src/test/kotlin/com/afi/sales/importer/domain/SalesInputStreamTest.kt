@@ -1,16 +1,16 @@
 package com.afi.sales.importer.domain
 
+import java.lang.NumberFormatException
+import java.math.BigDecimal
+import java.time.ZonedDateTime
+import java.util.stream.Stream
+import kotlin.reflect.KClass
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatList
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.DynamicTest.dynamicTest
 import org.junit.jupiter.api.TestFactory
-import java.lang.NumberFormatException
-import java.math.BigDecimal
-import java.time.ZonedDateTime
-import java.util.stream.Stream
-import kotlin.reflect.KClass
 
 class SalesInputStreamTest {
 
@@ -72,13 +72,13 @@ class SalesInputStreamTest {
                 name = "should throw exception when file is empty",
                 filename = "sales_empty.txt",
                 expectedException = EmptySalesFileException::class,
-                expectedExceptionMessage = "File sales_empty.txt is empty",
+                expectedExceptionMessage = "File sales_empty.txt is empty.",
             ),
             Scenario(
                 name = "should throw exception when file is invalid",
                 filename = "sales_invalid.txt",
                 expectedException = BadFormedSalesFileException::class,
-                expectedExceptionMessage = "File sales_invalid.txt is bad-formed",
+                expectedExceptionMessage = "File sales_invalid.txt is bad-formed.",
                 expectedExceptionCause = NumberFormatException::class,
             ),
         ).map { test ->

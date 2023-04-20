@@ -1,13 +1,13 @@
 package com.afi.sales.importer.application.port.input
 
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.DynamicTest
-import org.junit.jupiter.api.DynamicTest.dynamicTest
-import org.junit.jupiter.api.TestFactory
 import java.io.InputStream
 import java.util.stream.Stream
 import kotlin.Exception
 import kotlin.reflect.KClass
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.DynamicTest
+import org.junit.jupiter.api.DynamicTest.dynamicTest
+import org.junit.jupiter.api.TestFactory
 
 class ImportSalesFileCommandTest {
 
