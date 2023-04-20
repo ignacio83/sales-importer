@@ -30,10 +30,10 @@ class SalesInputStream(private val filename: String, private val inputStream: In
         }.onFailure {
             throw BadFormedSalesFileException(filename, it)
         }.onSuccess {
-            if (sales.getTransactions().isEmpty()) {
+            if (sales.transactions.isEmpty()) {
                 throw EmptySalesFileException(filename)
             } else {
-                logger.debug { "File $filename read with success. Transactions count: ${sales.getTransactionsCount()}" }
+                logger.debug { "File $filename read with success. Transactions count: ${sales.transactionsCount}" }
             }
         }
         return sales

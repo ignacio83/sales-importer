@@ -13,6 +13,9 @@ build-backend:
 verify: test-all
 	@./backend/gradlew -p backend ktlintCheck
 
+format:
+	@./backend/gradlew -p backend ktlintFormat
+
 up: setup
 	@docker compose -f docker-compose.yml up --build
 

@@ -3,15 +3,15 @@ package com.afi.sales.importer.domain
 import java.util.LinkedList
 
 class Sales {
-    private val transactions = LinkedList<Transaction>()
+    private val transactionsInner = LinkedList<Transaction>()
 
     fun addTransaction(transaction: Transaction) {
-        transactions.add(transaction)
+        transactionsInner.add(transaction)
     }
 
-    fun getTransactions(): List<Transaction> {
-        return transactions
-    }
+    val transactions: List<Transaction>
+        get() = transactionsInner
 
-    fun getTransactionsCount() = transactions.size
+    val transactionsCount: Int
+        get() = transactions.size
 }

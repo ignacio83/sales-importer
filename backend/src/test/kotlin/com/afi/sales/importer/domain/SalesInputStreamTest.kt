@@ -94,10 +94,10 @@ class SalesInputStreamTest {
                     }
                 } else {
                     val sales = salesInputStream.parse()
-                    val transactions = sales.getTransactions()
+                    val transactions = sales.transactions
                     assertThatList(transactions).containsAll(test.containsExpectedTransactions)
-                    assertThatList(sales.getTransactions()).hasSize(test.expectedTransactionCount)
-                    assertThat(sales.getTransactionsCount()).isEqualTo(test.expectedTransactionCount)
+                    assertThatList(sales.transactions).hasSize(test.expectedTransactionCount)
+                    assertThat(sales.transactionsCount).isEqualTo(test.expectedTransactionCount)
                 }
             }
         }

@@ -13,7 +13,7 @@ class ImportSalesFileService(private val insertTransactionPort: InsertTransactio
     @Transactional
     override fun execute(command: ImportSalesFileCommand): Int {
         val sales = SalesInputStream(command.filename, command.inputStream).parse()
-        sales.getTransactions().forEach(insertTransactionPort::insertTransaction)
-        return sales.getTransactionsCount()
+        sales.transactions.forEach(insertTransactionPort::insertTransaction)
+        return sales.transactionsCount
     }
 }
