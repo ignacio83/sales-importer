@@ -1,11 +1,10 @@
 package com.afi.sales.importer.adapter.out.postgres
 
 import com.afi.sales.importer.application.port.out.UpdateAffiliateBalancePort
+import java.math.BigDecimal
 import mu.KotlinLogging
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
-import java.math.BigDecimal
-
 
 const val AFFILIATE_ID = 1L
 

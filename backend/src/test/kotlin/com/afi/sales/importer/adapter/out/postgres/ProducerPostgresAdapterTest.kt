@@ -3,6 +3,7 @@ package com.afi.sales.importer.adapter.out.postgres
 import com.afi.sales.importer.given
 import com.afi.sales.importer.then
 import com.afi.sales.importer.whenever
+import java.math.BigDecimal
 import java.util.stream.Stream
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DynamicTest
@@ -13,7 +14,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager
 import org.springframework.context.annotation.Import
-import java.math.BigDecimal
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)

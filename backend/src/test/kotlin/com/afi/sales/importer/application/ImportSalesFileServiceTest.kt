@@ -13,13 +13,13 @@ import io.mockk.just
 import io.mockk.mockk
 import io.mockk.runs
 import io.mockk.verify
+import java.math.BigDecimal
 import java.util.Random
 import java.util.stream.Stream
 import kotlin.reflect.KClass
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.TestFactory
-import java.math.BigDecimal
 
 class ImportSalesFileServiceTest {
     private val insertTransactionPort = mockk<InsertTransactionPort>()
@@ -65,7 +65,11 @@ class ImportSalesFileServiceTest {
                 } whenever {
                     runCatching {
                         val inputStream = this::class.java.getResource("/${test.filename}")!!.openStream()
-                        val service = ImportSalesFileService(insertTransactionPort, updateProducerBalancePort, updateAffiliateBalancePort)
+                        val service = ImportSalesFileService(
+                            insertTransactionPort,
+                            updateProducerBalancePort,
+                            updateAffiliateBalancePort,
+                        )
                         service.execute(ImportSalesFileCommand(test.filename, inputStream))
                     }
                 } then { result ->
