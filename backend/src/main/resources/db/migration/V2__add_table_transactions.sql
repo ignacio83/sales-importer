@@ -11,4 +11,4 @@ CREATE TABLE transactions
 ALTER TABLE transactions
     ADD CONSTRAINT fk_transaction_types_transactions_01 FOREIGN KEY (type_id) REFERENCES transaction_types (id);
 
-CREATE UNIQUE INDEX xf_transaction_types_transactions_01 ON transactions (type_id);
+CREATE INDEX xf_transaction_types_transactions_01 ON transactions (type_id);

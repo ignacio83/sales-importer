@@ -53,7 +53,7 @@ class TransactionPostgresAdapterTest : PostgresIntegrationTest() {
             ),
             Scenario(
                 name = "should throw exception transaction when product description has 51 characters",
-                transaction = transactionProducerSale.copy(productDescription = RandomStringUtils.random(51)),
+                transaction = transactionProducerSale.copy(productDescription = RandomStringUtils.randomAlphabetic(51)),
                 expectedException = DataIntegrityViolationException::class,
             ),
         ).map { test ->

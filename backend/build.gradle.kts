@@ -34,6 +34,7 @@ dependencies {
     testImplementation("com.ninja-squad:springmockk:4.0.2")
     testImplementation("org.testcontainers:postgresql:1.18.0")
     testImplementation("org.assertj:assertj-core:3.24.2")
+    testImplementation("net.javacrumbs.json-unit:json-unit-assertj:2.37.0")
 }
 
 tasks.getByName<BootJar>("bootJar") {
