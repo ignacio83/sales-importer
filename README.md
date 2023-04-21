@@ -23,30 +23,22 @@ make down
 
 ## Guia do desenvolvedor
 
-### backend
-
-Construindo a aplicação:
+Rodar todos os testes
 
 ```shell
-./gradlew build
+make test-all
 ```
 
-Executando os testes unitários:
+Rodar todos os testes e os linters
 
 ```shell
-./gradlew test
+make verify
 ```
 
-Executando os testes de componente:
+Construir o backend
 
 ```shell
-./gradlew componentTest
-```
-
-Construindo a imagem docker:
-
-```shell
-docker build backend -f backend/Dockerfile -t sales-importer:latest
+make build-backend
 ```
 
 ## Issues
@@ -68,10 +60,11 @@ _A intenção aqui é demonstrar como as issues do projeto foram organizadas._
 | T11 | Empacotar o frontend utilizando Docker                                                          | Backlog    |
 | T12 | Construir pipeline de continuous integration para o backend                                     | Backlog    |
 | T13 | Construir pipeline de continuous integration para o frontend                                    | Backlog    |
-| T14 | Construir serviço que realiza a importação do arquivo de vendas e armazena no banco de dados    | Backlog    |
+| T14 | Construir serviço que realiza a importação do arquivo de vendas e armazena no banco de dados    | Finalizado |
 | T15 | Construir serviço que consulta todas as transações                                              | Backlog    |
 | T17 | Construir serviço que retorna o saldo final do produtor                                         | Backlog    |
 | T18 | Construir serviço que retorna o saldo final do afiliado                                         | Backlog    |
+| T19 | Relacionar as transações aos afiliados e aos consumidores                                       | Backlog    |
 
 ## ADR
 
@@ -177,6 +170,14 @@ aplicação e dominio, é permitido o Spring também nessas camadas.
 
 * Decisão: Clean Architecture implementado com Arquitetura Hexagonal
 * Alternativas consideradas: Controller/Service/Repository
+
+### Logging Library
+
+O `Spring` já utiliza o Logback para configuração do log, porém existe um library de log do Kotlin facilita o seu uso,
+já que tira proveito do mecanismo de lambas do Kotlin.
+
+* Decisão: [kotlin-logging](https://github.com/oshai/kotlin-logging)
+* Alterinativas: slf4j, logback
 
 ### Framework de Frontend
 

@@ -1,7 +1,7 @@
-package com.afi.sales.importer
+package com.afi.sales.importer.adapter.out.postgres
 
 import org.junit.jupiter.api.Tag
-import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.boot.test.util.TestPropertyValues
 import org.springframework.context.ApplicationContextInitializer
 import org.springframework.context.ConfigurableApplicationContext
@@ -9,9 +9,10 @@ import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.TestPropertySource
 import org.testcontainers.containers.PostgreSQLContainer
 
-@SpringBootTest
+// @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@DataJpaTest
 @ContextConfiguration(
-    initializers = [ComponentTest.Companion.Initializer::class],
+    initializers = [PostgresIntegrationTest.Companion.Initializer::class],
 )
 @TestPropertySource(
     properties = [
@@ -19,8 +20,8 @@ import org.testcontainers.containers.PostgreSQLContainer
         "logging.level.level.com.afi.sales.importer=DEBUG",
     ],
 )
-@Tag("Component")
-abstract class ComponentTest {
+@Tag("Integration")
+abstract class PostgresIntegrationTest {
 
     companion object {
         private val POSTGRESQL_CONTAINER = PostgreSQLContainer("postgres:15.2-alpine")
