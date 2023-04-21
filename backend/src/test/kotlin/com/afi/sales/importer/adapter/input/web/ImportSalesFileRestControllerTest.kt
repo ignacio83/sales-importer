@@ -10,6 +10,7 @@ import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 import io.mockk.slot
 import io.mockk.verify
+import java.lang.NullPointerException
 import java.util.stream.Stream
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DynamicTest
@@ -85,6 +86,15 @@ class ImportSalesFileRestControllerTest {
                        "detail":"File sales_empty.tx is empty."
                     }""",
                 ),
+            ),
+            Scenario(
+                name = "should be status 500 when a unexpected error occurs",
+                given = { uc ->
+                    every { uc.execute(any()) } throws NullPointerException()
+                },
+                filename = "sales.txt",
+                expectedStatus = status().isInternalServerError,
+                expectedContent = content().string(""),
             ),
         ).map { test ->
             dynamicTest(test.name) {

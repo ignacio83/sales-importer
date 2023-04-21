@@ -19,7 +19,7 @@ import org.springframework.util.LinkedMultiValueMap
 import org.springframework.util.MultiValueMap
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class UploadSalesFileTests(
+class UploadSalesFileComponentTests(
     @LocalServerPort
     val randomServerPort: Int,
 ) : ComponentTest() {
