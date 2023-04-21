@@ -71,21 +71,30 @@ class SalesTest {
                 expectedBalance = BigDecimal.ZERO,
             ),
             Scenario(
-                name = "should be 12.00 when has just one sale transaction for producer and the value is 12.00",
+                name = "should be 32.00 when has just one sale transaction for producer and the value is 12.00",
                 transactions = listOf(
                     TransactionScenarios.producerSale(value = BigDecimal.valueOf(1200, 2)),
                     TransactionScenarios.affiliateSale(value = BigDecimal.valueOf(2000, 2)),
                 ),
-                expectedBalance = BigDecimal.valueOf(12.00).setScale(2),
+                expectedBalance = BigDecimal.valueOf(32.00).setScale(2),
             ),
             Scenario(
-                name = "should be 42.22 when sum of transaction sales for producer is 42.22",
+                name = "should be 62.22 when sum of transaction sales for producer and affiliate is 42.22",
                 transactions = listOf(
                     TransactionScenarios.producerSale(value = BigDecimal.valueOf(1200, 2)),
                     TransactionScenarios.producerSale(value = BigDecimal.valueOf(3022, 2)),
                     TransactionScenarios.affiliateSale(value = BigDecimal.valueOf(2000, 2)),
                 ),
-                expectedBalance = BigDecimal.valueOf(42.22).setScale(2),
+                expectedBalance = BigDecimal.valueOf(62.22).setScale(2),
+            ),
+            Scenario(
+                name = "should be 10.22 when sum of transaction sales for producer is 30.22 but there is a commission of 20.00",
+                transactions = listOf(
+                    TransactionScenarios.producerSale(value = BigDecimal.valueOf(3022, 2)),
+                    TransactionScenarios.commissionPayed(value = BigDecimal.valueOf(2000, 2)),
+                    TransactionScenarios.commissionReceived(value = BigDecimal.valueOf(2000, 2)),
+                ),
+                expectedBalance = BigDecimal.valueOf(10.22).setScale(2),
             ),
         ).map { test ->
             dynamicTest(test.name) {
@@ -115,21 +124,22 @@ class SalesTest {
                 expectedBalance = BigDecimal.ZERO,
             ),
             Scenario(
-                name = "should be 11.11 when has just one sale transaction for affiliate and the value is 11.11",
+                name = "should be 0 when has just one sale transaction for affiliate and does not have commission",
                 transactions = listOf(
                     TransactionScenarios.producerSale(value = BigDecimal.valueOf(3000, 2)),
                     TransactionScenarios.affiliateSale(value = BigDecimal.valueOf(1111, 2)),
                 ),
-                expectedBalance = BigDecimal.valueOf(11.11).setScale(2),
+                expectedBalance = BigDecimal.ZERO,
             ),
             Scenario(
-                name = "should be 75.67 when sum of transaction sales for affiliate is 75.67",
+                name = "should be 36.00 when there sum of commission received is 36.00",
                 transactions = listOf(
                     TransactionScenarios.affiliateSale(value = BigDecimal.valueOf(5567, 2)),
-                    TransactionScenarios.affiliateSale(value = BigDecimal.valueOf(2000, 2)),
                     TransactionScenarios.producerSale(value = BigDecimal.valueOf(1200, 2)),
+                    TransactionScenarios.commissionReceived(value = BigDecimal.valueOf(1200, 2)),
+                    TransactionScenarios.commissionReceived(value = BigDecimal.valueOf(2400, 2)),
                 ),
-                expectedBalance = BigDecimal.valueOf(75.67).setScale(2),
+                expectedBalance = BigDecimal.valueOf(36.00).setScale(2),
             ),
         ).map { test ->
             dynamicTest(test.name) {

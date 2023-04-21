@@ -21,4 +21,20 @@ object TransactionScenarios {
         value = value,
         salesPersonName = "Walter White",
     )
+
+    fun commissionPayed(value: BigDecimal = BigDecimal.valueOf(1000, 2)) = Transaction(
+        type = TransactionType.CommissionPayed,
+        date = ZonedDateTime.of(2023, 3, 10, 13, 30, 2, 0, ZoneId.of("UTC")),
+        productDescription = "Pencil",
+        value = value,
+        salesPersonName = "Walter White",
+    )
+
+    fun commissionReceived(value: BigDecimal = BigDecimal.valueOf(9001, 2)) = Transaction(
+        type = TransactionType.CommissionReceived,
+        date = ZonedDateTime.of(2023, 3, 10, 13, 30, 2, 0, ZoneId.of("UTC")),
+        productDescription = "Pencil",
+        value = value,
+        salesPersonName = "Walter White",
+    )
 }

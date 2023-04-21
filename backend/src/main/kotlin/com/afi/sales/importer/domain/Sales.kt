@@ -12,8 +12,9 @@ class Sales {
         transactionsInner.add(transaction)
         when (transaction.type) {
             TransactionType.ProducerSale -> producerBalanceInner += transaction.value
-            TransactionType.AffiliateSale -> affiliateBalanceInner += transaction.value
-            else -> {}
+            TransactionType.AffiliateSale -> producerBalanceInner += transaction.value
+            TransactionType.CommissionReceived -> affiliateBalanceInner += transaction.value
+            TransactionType.CommissionPayed -> producerBalanceInner -= transaction.value
         }
     }
 
