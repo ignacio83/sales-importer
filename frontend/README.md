@@ -6,6 +6,11 @@ Préquisitos
 * [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 * [yarn](https://classic.yarnpkg.com/lang/en/docs/install/)
 
+Instalando as dependências:
+```shell
+yarn install
+```
+
 Executando o linter
 
 ```shell

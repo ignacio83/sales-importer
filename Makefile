@@ -10,6 +10,12 @@ test-all:
 build-backend:
 	@./backend/gradlew -p backend build
 
+build-container-backend:
+	@docker build backend -f backend/Dockerfile -t sales-importer:latest
+
+build-container-frontend:
+	@docker build frontend -f frontend/Dockerfile -t sales-importer-frontend:latest
+
 verify: test-all
 	@yarn --cwd ./frontend lint
 	@./backend/gradlew -p backend ktlintCheck

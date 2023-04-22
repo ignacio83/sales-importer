@@ -63,7 +63,7 @@ _A intenção aqui é demonstrar como as issues do projeto foram organizadas._
 | T8  | Empacotar o backend utilizando Docker                                                           | Finalizado |
 | T9  | Modernizar o frontend utilizando um framework mais moderno como Angular ou React                | Backlog    |
 | T10 | Configurar Checkstyle, Lint e Code formatter para o frontend                                    | Finalizado |
-| T11 | Empacotar o frontend utilizando Docker                                                          | Backlog    |
+| T11 | Empacotar o frontend utilizando Docker                                                          | Finalizado |
 | T12 | Construir pipeline de continuous integration para o backend                                     | Backlog    |
 | T13 | Construir pipeline de continuous integration para o frontend                                    | Backlog    |
 | T14 | Construir serviço que realiza a importação do arquivo de vendas e armazena no banco de dados    | Finalizado |

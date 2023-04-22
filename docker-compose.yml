@@ -1,5 +1,15 @@
 version: "3.9"
 services:
+  frontend:
+    image: sales-importer-frontend:latest
+    restart: always
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    depends_on:
+      - backend
+    ports:
+      - '80:80'
   backend:
     image: sales-importer:latest
     restart: always
