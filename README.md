@@ -35,6 +35,12 @@ Rodar todos os testes e os linters
 make verify
 ```
 
+Formatar o código automáticamente
+
+```shell
+make format
+```
+
 Construir o backend
 
 ```shell
@@ -45,26 +51,26 @@ make build-backend
 
 _A intenção aqui é demonstrar como as issues do projeto foram organizadas._
 
-| ID  | Descrição                                                                                       | Status       |
-|-----|-------------------------------------------------------------------------------------------------|--------------|
-| T1  | Convenções para as mensagens dos commits, nomeclatura de branches e pipeline de desenvolvimento | Finalizado   |
-| T2  | Definir a linguagem, frameworks e arquitetura da aplicação                                      | Finalizado   |
-| T3  | Definir a pirâmide de testes                                                                    | Finalizado   |
-| T4  | Definir o design de pacotes e camadas                                                           | Finalizado   |
-| T5  | Criar a estrutura da aplicação de backend                                                       | Finalizado   |
-| T6  | Configurar Checkstyle, Lint e Code formatter para o backend                                     | Finalizado   |
-| T7  | Criar a estrutura da aplicação de frontend                                                      | Finalizado   |
-| T8  | Empacotar o backend utilizando Docker                                                           | Finalizado   |
-| T9  | Modernizar o frontend utilizando um framework mais moderno como Angular ou React                | Backlog      |
-| T10 | Configurar Checkstyle, Lint e Code formatter para o frontend                                    | Em andamento |
-| T11 | Empacotar o frontend utilizando Docker                                                          | Backlog      |
-| T12 | Construir pipeline de continuous integration para o backend                                     | Backlog      |
-| T13 | Construir pipeline de continuous integration para o frontend                                    | Backlog      |
-| T14 | Construir serviço que realiza a importação do arquivo de vendas e armazena no banco de dados    | Finalizado   |
-| T15 | Construir serviço que consulta todas as transações                                              | Backlog      |
-| T17 | Construir serviço que retorna o saldo final do produtor                                         | Backlog      |
-| T18 | Construir serviço que retorna o saldo final do afiliado                                         | Backlog      |
-| T19 | Relacionar as transações aos afiliados e aos consumidores                                       | Backlog      |
+| ID  | Descrição                                                                                       | Status     |
+|-----|-------------------------------------------------------------------------------------------------|------------|
+| T1  | Convenções para as mensagens dos commits, nomeclatura de branches e pipeline de desenvolvimento | Finalizado |
+| T2  | Definir a linguagem, frameworks e arquitetura da aplicação                                      | Finalizado |
+| T3  | Definir a pirâmide de testes                                                                    | Finalizado |
+| T4  | Definir o design de pacotes e camadas                                                           | Finalizado |
+| T5  | Criar a estrutura da aplicação de backend                                                       | Finalizado |
+| T6  | Configurar Checkstyle, Lint e Code formatter para o backend                                     | Finalizado |
+| T7  | Criar a estrutura da aplicação de frontend                                                      | Finalizado |
+| T8  | Empacotar o backend utilizando Docker                                                           | Finalizado |
+| T9  | Modernizar o frontend utilizando um framework mais moderno como Angular ou React                | Backlog    |
+| T10 | Configurar Checkstyle, Lint e Code formatter para o frontend                                    | Finalizado |
+| T11 | Empacotar o frontend utilizando Docker                                                          | Backlog    |
+| T12 | Construir pipeline de continuous integration para o backend                                     | Backlog    |
+| T13 | Construir pipeline de continuous integration para o frontend                                    | Backlog    |
+| T14 | Construir serviço que realiza a importação do arquivo de vendas e armazena no banco de dados    | Finalizado |
+| T15 | Construir serviço que consulta todas as transações                                              | Backlog    |
+| T17 | Construir serviço que retorna o saldo final do produtor                                         | Backlog    |
+| T18 | Construir serviço que retorna o saldo final do afiliado                                         | Backlog    |
+| T19 | Relacionar as transações aos afiliados e aos consumidores                                       | Backlog    |
 
 ## ADR
 
@@ -182,10 +188,11 @@ já que tira proveito do mecanismo de lambas do Kotlin.
 ### Framework de Frontend
 
 Devido a pouca experiência com frameworks para recentes para frontend, o prazo do projeto e a simplicidade do frontend,
-vamos seguir com `Vanilla JS`. Mas está planejado a sustituição dessa desse frontend para o `Angular` ou `React` em um
+vamos seguir com `Vanilla JS - EM6+`. Mas está planejado a sustituição dessa desse frontend para o `Angular` ou `React`
+em um
 futuro próximo.
 
-* Decisão: `Vanilla JS`
+* Decisão: `Vanilla JS - ES6+`
 * Alternativas consideradas: `Angular`, `React`
 
 ### Build system para o Frontend
@@ -196,6 +203,21 @@ O desempate aqui ficou por conta do desempenho do `yarn` ser superior.
 
 * Decisão: `yarn`
 * Alternativas consideradas: `npm`, `Bazel`
+
+### Style Guide para o Frontend
+
+Afim de evitar maiores discussões sobre formatação de código, optamos pelo Style
+Guide [Standard](https://github.com/standard/standard).
+
+* Decisão: `Standard`
+* Alternativas consideradas: `Google`, `Airbnb`
+
+### Linter, Checkstyle and Code Formatter para o Frontend
+
+Optamos aqui pelo framework mais para popular entre os avaliados. O Code F
+
+* Decisão: `ESLint`
+* Alternativas consideradas: `JSLint`, `JSHint`
 
 ### Arquitetura de aplicação
 

@@ -4,13 +4,12 @@
     <title>Sales Importer</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="module">
-        import ImportButton from "./js/components.js"
-        import SalesFileImportAdapter from "./js/adapters.js"
-
-        document.addEventListener("DOMContentLoaded", function () {
-            const salesFileImportAdapter = new SalesFileImportAdapter()
-            window.importButton = new ImportButton(document.getElementById("import-button"), salesFileImportAdapter)
-        });
+    import ImportButton from './js/components.js'
+    import SalesFileImportAdapter from './js/adapters.js'
+    document.addEventListener('DOMContentLoaded', function () {
+      const salesFileImportAdapter = new SalesFileImportAdapter()
+      window.importButton = new ImportButton(document.getElementById('import-button'), salesFileImportAdapter)
+    })
     </script>
 </head>
 <body>

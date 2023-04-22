@@ -11,9 +11,11 @@ build-backend:
 	@./backend/gradlew -p backend build
 
 verify: test-all
+	@yarn --cwd ./frontend lint
 	@./backend/gradlew -p backend ktlintCheck
 
 format:
+	@yarn --cwd ./frontend format
 	@./backend/gradlew -p backend ktlintFormat
 
 up: setup
