@@ -88,7 +88,8 @@ class SalesTest {
                 expectedBalance = BigDecimal.valueOf(62.22).setScale(2),
             ),
             Scenario(
-                name = "should be 10.22 when sum of transaction sales for producer is 30.22 but there is a commission of 20.00",
+                name = "should be 10.22 when sum of transaction sales for producer is 30.22 but there is a " +
+                    "commission of 20.00 to be payed",
                 transactions = listOf(
                     TransactionScenarios.producerSale(value = BigDecimal.valueOf(3022, 2)),
                     TransactionScenarios.commissionPayed(value = BigDecimal.valueOf(2000, 2)),
