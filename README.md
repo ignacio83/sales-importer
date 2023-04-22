@@ -219,6 +219,20 @@ Optamos aqui pelo framework mais para popular entre os avaliados. O Code F
 * Decisão: `ESLint`
 * Alternativas consideradas: `JSLint`, `JSHint`
 
+### Estrutura de arquivos para o frontend
+
+Como estamos utilizando Vanilla JS optamos por uma estrutura simples onde temos dois arquivos js.
+
+* components.js: Contém os componentes da tela, é lá que os binds entre os components do HTML e o Javascript é
+  realizado.
+  Optamos aqui também por uma estrutura de ports e adapters, porém sem o uso de interfaces, e sim com o uso da tipagem
+  dinâmica.
+
+* adapters.rs: Contém os adaptadores, as chamadas HTTP são realizados nesse arquivo.
+
+* Decisão: Um arquivo por camada.
+* Alternativas consideradas: Utilizar typescript e implementar uma estrutura de camadas com interfaces.
+
 ### Arquitetura de aplicação
 
 É um requisito não funcional que a aplicação seja empacotada em containers `Docker`. Optamos aqui for dois containers,
