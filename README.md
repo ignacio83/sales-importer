@@ -53,7 +53,7 @@ _A intenção aqui é demonstrar como as issues do projeto foram organizadas._
 | T4  | Definir o design de pacotes e camadas                                                           | Finalizado |
 | T5  | Criar a estrutura da aplicação de backend                                                       | Finalizado |
 | T6  | Configurar Checkstyle, Lint e Code formatter para o backend                                     | Finalizado |
-| T7  | Criar a estrutura da aplicação de frontend                                                      | Backlog    |
+| T7  | Criar a estrutura da aplicação de frontend                                                      | Finalizado |
 | T8  | Empacotar o backend utilizando Docker                                                           | Finalizado |
 | T9  | Modernizar o frontend utilizando um framework mais moderno como Angular ou React                | Backlog    |
 | T10 | Configurar Checkstyle, Lint e Code formatter para o frontend                                    | Backlog    |
