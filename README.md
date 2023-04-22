@@ -71,6 +71,7 @@ _A intenção aqui é demonstrar como as issues do projeto foram organizadas._
 | T17 | Construir serviço que retorna o saldo final do produtor                                         | Backlog    |
 | T18 | Construir serviço que retorna o saldo final do afiliado                                         | Backlog    |
 | T19 | Relacionar as transações aos afiliados e aos consumidores                                       | Backlog    |
+| T20 | Construir a tela para importação do arquivo                                                     | Backlog    |
 
 ## ADR
 
