@@ -14,8 +14,20 @@ class SalesFileUploadAdapter {
         Accept: 'application/json'
       }
     })
-      .then(res => res.json())
-      .catch(x => console.error(x))
+      .then(res => this.handleResponse(res))
+  }
+
+  handleResponse (res) {
+    if (res.status === 200) {
+      return res.json()
+    } else if (res.status >= 400 && res.status < 500) {
+      return res.json().then(json => {
+        throw new Error(json.detail)
+      })
+    } else {
+      console.error('Unable to call upload service:', res.status)
+      throw new Error('Unable to call upload service')
+    }
   }
 }
 

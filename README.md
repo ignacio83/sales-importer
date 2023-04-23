@@ -1,7 +1,7 @@
 # Sales Importer
 
-Aplicação responsável pela importar e processar os arquivos de transações feitas na venda de produtos por nossos
-clientes.
+Aplicação responsável pela importar e processar os arquivos de transações feitas na venda de produtos pelos afiliados
+e produtores.
 
 ## Guia do usuário
 
@@ -12,6 +12,8 @@ Executando e construindo todo o ambiente:
 ```shell
 make up
 ```
+
+Então acessar: [http://localhost:3000](http://localhost:3000)
 
 Desligando todo o ambiente:
 

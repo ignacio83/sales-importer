@@ -20,7 +20,7 @@ class AffiliatePostgresAdapter(private val repository: AffiliateRepository) : Up
         affiliate!!.balance += balance
         repository.save(affiliate!!)
         logger.debug {
-            "Affiliate(id=${affiliate.id} ${if (insert) "inserted" else "updated"}"
+            "Affiliate(id=${affiliate.id}) ${if (insert) "inserted" else "updated"}"
         }
     }
 }

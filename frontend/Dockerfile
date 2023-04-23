@@ -3,6 +3,9 @@ WORKDIR /app
 
 ADD ./ .
 RUN yarn install
+RUN yarn test
+
+RUN rm -rf /app/public/*.spec.js
 
 FROM nginx:1.23.4
 
