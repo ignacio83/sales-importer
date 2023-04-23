@@ -1,13 +1,14 @@
-class ImportButton {
-  constructor (element, salesFileImportPort) {
-    this.element = element
+class ImportForm {
+  constructor (form, salesFileImportPort) {
+    this.form = form
     this.salesFileImportPort = salesFileImportPort
-    this.element.onclick = _ => this.execute()
+    this.form.importButton.onclick = _ => this.execute()
   }
 
   execute () {
-    this.salesFileImportPort.execute()
+    const file = this.form.file.files[0]
+    this.salesFileImportPort.execute(file)
   }
 }
 
-export default ImportButton
+export default ImportForm

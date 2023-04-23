@@ -5,6 +5,14 @@
   },
   "extends": "standard",
   "overrides": [
+    {
+      "files": [
+        "**/*.spec.js"
+      ],
+      "env": {
+        "jest": true
+      }
+    }
   ],
   "parserOptions": {
     "ecmaVersion": "latest",
