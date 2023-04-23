@@ -3,6 +3,7 @@ setup:
 	@export COMPOSE_DOCKER_CLI_BUILD=0
 
 test-all:
+	@yarn --cwd ./frontend test
 	@./backend/gradlew -p backend test
 	@./backend/gradlew -p backend integrationTest
 	@./backend/gradlew -p backend componentTest
@@ -29,6 +30,15 @@ up: setup
 
 down: setup
 	@docker compose -f docker-compose.yml down --remove-orphans
+
+run-database:
+	@docker run -d -p 5432:5432 --env POSTGRES_PASSWORD=simplepassword --env POSTGRES_DB=sales --name database-sales-importer postgres:15.2-alpine
+
+start-database:
+	@docker start database-sales-importer
+
+stop-database:
+	@docker stop database-sales-importer
 
 clean:
 	@./backend/gradlew -p backend clean

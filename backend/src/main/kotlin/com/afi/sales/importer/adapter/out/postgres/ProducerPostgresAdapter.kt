@@ -20,7 +20,7 @@ class ProducerPostgresAdapter(private val repository: ProducerRepository) : Upda
         producer!!.balance += balance
         repository.save(producer!!)
         logger.debug {
-            "Producer(id=${producer.id} ${if (insert) "inserted" else "updated"}"
+            "Producer(id=${producer.id}) ${if (insert) "inserted" else "updated"}"
         }
     }
 }

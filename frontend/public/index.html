@@ -4,16 +4,28 @@
     <title>Sales Importer</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="module">
-    import ImportButton from './js/components.js'
-    import SalesFileImportAdapter from './js/adapters.js'
-    document.addEventListener('DOMContentLoaded', function () {
-      const salesFileImportAdapter = new SalesFileImportAdapter()
-      window.importButton = new ImportButton(document.getElementById('import-button'), salesFileImportAdapter)
-    })
+        import ImportForm from './js/components.js'
+        import SalesFileUploadAdapter from './js/adapters.js'
+        import config from './js/config.js'
+
+        document.addEventListener('DOMContentLoaded', function () {
+          const salesFileUploadAdapter = new SalesFileUploadAdapter(config.backendUrl)
+          window.importForm = new ImportForm(
+            document.getElementById('fileImporterForm'),
+            document.getElementById('messages'),
+            salesFileUploadAdapter)
+        })
     </script>
 </head>
 <body>
 <h1>Sales Importer</h1>
-<button type="button" id="import-button">Importar</button>
+<div>
+    <h2>Importação de arquivo</h2>
+    <div id="messages"  data-testid="messages"></div>
+    <form id="fileImporterForm">
+        <input type="file" name="file" required/><br>
+        <button type="button" name="importButton">Importar</button>
+    </form>
+</div>
 </body>
 </html>
