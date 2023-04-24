@@ -26,9 +26,44 @@ class SalesFileUploadAdapter {
       })
     } else {
       console.error('Unable to call upload service:', res.status)
-      throw new Error('Unable to call upload service')
+      throw new Error('Unable to upload file')
     }
   }
 }
 
-export default SalesFileUploadAdapter
+class TransactionSearchAdapter {
+  constructor (basePath) {
+    this.basePath = basePath
+  }
+
+  findAll () {
+    return fetch(`${this.basePath}/api/v1/sales/transactions`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json'
+      }
+    })
+      .then(res => this.handleResponse(res))
+  }
+
+  handleResponse (res) {
+    if (res.status === 200) {
+      return res.json().then(transactions => {
+        return transactions.map(transaction => {
+          const date = new Date(transaction.date)
+          transaction.date = date
+          return transaction
+        })
+      })
+    } else if (res.status >= 400 && res.status < 500) {
+      return res.json().then(json => {
+        throw new Error(json.detail)
+      })
+    } else {
+      console.error('Unable to find all transactions:', res.status)
+      throw new Error('Unable to find all transactions')
+    }
+  }
+}
+
+export { SalesFileUploadAdapter, TransactionSearchAdapter }
