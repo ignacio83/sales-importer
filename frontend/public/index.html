@@ -4,8 +4,8 @@
     <title>Sales Importer</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script type="module">
-        import { ImportForm, TransactionsSearch } from './js/components.js'
-        import { SalesFileUploadAdapter, TransactionSearchAdapter } from './js/adapters.js'
+        import { ImportForm, TransactionsSearch, BalanceValue } from './js/components.js'
+        import { SalesFileUploadAdapter, TransactionSearchAdapter, ProducerBalanceAdapter, AffiliateBalanceAdapter } from './js/adapters.js'
         import config from './js/config.js'
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -16,16 +16,41 @@
             salesFileUploadAdapter)
 
           const transactionSearchAdapter = new TransactionSearchAdapter(config.backendUrl)
-          window.transactionsTable = new TransactionsSearch(
+          window.transactionsSearch = new TransactionsSearch(
             document.getElementById('transactionsTable'),
             document.getElementById('searchTransactionsButton'),
             document.getElementById('transactionMessages'),
             transactionSearchAdapter)
+
+          const producerBalanceAdapter = new ProducerBalanceAdapter(config.backendUrl)
+          window.producerBalanceValue = new BalanceValue(
+            document.getElementById('producerBalance'),
+            document.getElementById('balanceMessages'),
+            producerBalanceAdapter)
+
+          window.producerBalanceValue.autoRefresh(1, 5000)
+
+          const affiliateBalanceAdapter = new AffiliateBalanceAdapter(config.backendUrl)
+          window.affiliateBalanceValue = new BalanceValue(
+            document.getElementById('affiliateBalance'),
+            document.getElementById('balanceMessages'),
+            affiliateBalanceAdapter)
+
+          window.affiliateBalanceValue.autoRefresh(1, 5000)
         })
     </script>
 </head>
 <body>
 <h1>Sales Importer</h1>
+<div>
+    <div id="balanceMessages"></div>
+    <div>
+        <b>Saldo do produtor:</b> <span id="producerBalance"></span>
+    </div>
+    <div>
+        <b>Saldo do afiliado:</b> <span id="affiliateBalance"></span>
+    </div>
+</div>
 <div>
     <h2>Importação de arquivo</h2>
     <div id="messages"></div>
@@ -40,11 +65,11 @@
     <button type="button" id="searchTransactionsButton">Consultar</button>
     <table id="transactionsTable">
         <thead>
-        <td>Tipo</td>
-        <td>Produto</td>
-        <td>Vendedor</td>
-        <td>Valor</td>
-        <td>Data</td>
+        <th>Tipo</th>
+        <th>Produto</th>
+        <th>Vendedor</th>
+        <th>Valor</th>
+        <th>Data</th>
         </thead>
         <tbody></tbody>
     </table>

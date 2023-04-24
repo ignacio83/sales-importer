@@ -66,4 +66,62 @@ class TransactionSearchAdapter {
   }
 }
 
-export { SalesFileUploadAdapter, TransactionSearchAdapter }
+class ProducerBalanceAdapter {
+  constructor (basePath) {
+    this.basePath = basePath
+  }
+
+  findBalance (id) {
+    return fetch(`${this.basePath}/api/v1/producers/${id}/balance`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json'
+      }
+    })
+      .then(res => this.handleResponse(res))
+  }
+
+  handleResponse (res) {
+    if (res.status === 200) {
+      return res.json().then(json => {
+        return json.value
+      })
+    } else if (res.status === 404) {
+      return null
+    } else {
+      console.error('Unable to find producer balance:', res.status)
+      throw new Error('Unable to find producer balance')
+    }
+  }
+}
+
+class AffiliateBalanceAdapter {
+  constructor (basePath) {
+    this.basePath = basePath
+  }
+
+  findBalance (id) {
+    return fetch(`${this.basePath}/api/v1/affiliates/${id}/balance`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json'
+      }
+    })
+      .then(res => this.handleResponse(res))
+  }
+
+  handleResponse (res) {
+    if (res.status === 200) {
+      return res.json().then(json => {
+        return json.value
+      })
+    } else if (res.status === 404) {
+      return null
+    } else {
+      console.error('Unable to find affiliate balance:', res.status)
+      throw new Error('Unable to find affiliate balance')
+    }
+  }
+}
+
+export { SalesFileUploadAdapter, TransactionSearchAdapter, ProducerBalanceAdapter, AffiliateBalanceAdapter }
