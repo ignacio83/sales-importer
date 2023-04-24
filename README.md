@@ -50,6 +50,12 @@ Construir o backend
 make build-backend
 ```
 
+Construir o frontend
+
+```shell
+make build-frontend
+```
+
 ## Issues
 
 _A intenção aqui é demonstrar como as issues do projeto foram organizadas._
@@ -78,6 +84,7 @@ _A intenção aqui é demonstrar como as issues do projeto foram organizadas._
 | T20 | Construir a tela para importação do arquivo                                                     | Finalizado |
 | T21 | Documentar as APIs com Swagger                                                                  | Finalizado |
 | T22 | Atualizar os saldos do produtor e do afiliado com websockets                                    | Backlog    |
+| T23 | Implementar autênticação                                                                        | Backlog    |
 
 ## ADR
 
