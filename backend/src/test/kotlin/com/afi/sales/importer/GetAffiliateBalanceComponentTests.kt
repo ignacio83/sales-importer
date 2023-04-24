@@ -1,13 +1,11 @@
 package com.afi.sales.importer
 
 import com.afi.sales.importer.adapter.out.postgres.AffiliateEntity
-import com.afi.sales.importer.adapter.out.postgres.ProducerEntity
 import com.afi.sales.importer.adapter.out.postgres.TransactionEntity
 import com.afi.sales.importer.adapter.out.postgres.TransactionTypeEntity
 import com.afi.sales.importer.domain.Transaction
 import jakarta.persistence.EntityManager
 import java.math.BigDecimal
-import java.util.*
 import java.util.stream.Stream
 import net.javacrumbs.jsonunit.assertj.assertThatJson
 import org.assertj.core.api.Assertions.assertThat
