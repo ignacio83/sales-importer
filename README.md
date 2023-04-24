@@ -234,7 +234,7 @@ Como estamos utilizando Vanilla JS optamos por uma estrutura simples onde temos 
   Optamos aqui também por uma estrutura de ports e adapters, porém sem o uso de interfaces, e sim com o uso da tipagem
   dinâmica.
 
-* adapters.rs: Contém os adaptadores, as chamadas HTTP são realizados nesse arquivo.
+* adapters.js: Contém os adaptadores, as chamadas HTTP são realizados nesse arquivo.
 
 * Decisão: Um arquivo por camada.
 * Alternativas consideradas: Utilizar typescript e implementar uma estrutura de camadas com interfaces.
@@ -242,8 +242,8 @@ Como estamos utilizando Vanilla JS optamos por uma estrutura simples onde temos 
 ### Arquitetura de aplicação
 
 É um requisito não funcional que a aplicação seja empacotada em containers `Docker`. Optamos aqui for dois containers,
-um para o frontend e outro para o backend, seria possível empacotar ambos em um único container, porém optamos aqui
-por ter as camadas separadas e utilizar build systems diferente para cada um deles.
+um para o frontend e outro para o backend, seria possível empacotar ambos em um único container, porém preferimos ter 
+as camadas separadas e utilizar build systems diferente para cada um deles.
 
 * Decisão: Dois containers (Um para frontend e outro para o backend)
 * Alternativas consideradas: Um unico container contendo tanto o Frontend, quanto o Backend.
