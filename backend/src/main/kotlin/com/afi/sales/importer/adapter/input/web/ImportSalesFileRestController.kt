@@ -24,6 +24,15 @@ class ImportSalesFileRestController(private val importSalesFileUseCase: ImportSa
     @ResponseStatus(HttpStatus.OK)
     @Operation(
         summary = "Imports sales file",
+        description = "Positional file format:<br>" +
+            "<table>" +
+            "<tr><th>Field</th><th>Begin</th><th>End</th><th>Size</th><th>Description</th></tr>" +
+            "<tr><td>Type</td><td>1</td><td>1</td><td>1</td><td>Transaction's type</td></tr>" +
+            "<tr><td>Date</td><td>2</td><td>26</td><td>25</td><td>ISO Date + GMT</td></tr>" +
+            "<tr><td>Product</td><td>27</td><td>56</td><td>30</td><td>Product's description</td></tr>" +
+            "<tr><td>Value</td><td>57</td><td>66</td><td>10</td><td>Transaction value in cents</td></tr>" +
+            "<tr><td>Sales person</td><td>67</td><td>86</td><td>20</td><td>Sales person's name</td></tr>" +
+            "</table>",
         responses =
         [
             ApiResponse(
