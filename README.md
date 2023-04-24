@@ -77,6 +77,7 @@ _A intenção aqui é demonstrar como as issues do projeto foram organizadas._
 | T19 | Relacionar as transações aos afiliados e aos consumidores                                       | Backlog    |
 | T20 | Construir a tela para importação do arquivo                                                     | Finalizado |
 | T21 | Documentar as APIs com Swagger                                                                  | Finalizado |
+| T22 | Atualizar os saldos do produtor e do afiliado com websockets                                    | Backlog    |
 
 ## ADR
 
@@ -242,7 +243,7 @@ Como estamos utilizando Vanilla JS optamos por uma estrutura simples onde temos 
 ### Arquitetura de aplicação
 
 É um requisito não funcional que a aplicação seja empacotada em containers `Docker`. Optamos aqui for dois containers,
-um para o frontend e outro para o backend, seria possível empacotar ambos em um único container, porém preferimos ter 
+um para o frontend e outro para o backend, seria possível empacotar ambos em um único container, porém preferimos ter
 as camadas separadas e utilizar build systems diferente para cada um deles.
 
 * Decisão: Dois containers (Um para frontend e outro para o backend)

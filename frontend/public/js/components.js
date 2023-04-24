@@ -43,16 +43,26 @@ class TransactionsSearch {
       tbody.innerHTML = ''
       transactions.forEach(transaction => {
         const newRow = tbody.insertRow()
-        this.insertCell(newRow, transaction.type)
+        this.insertCell(newRow, this.toTypeDescription(transaction.type))
         this.insertCell(newRow, transaction.productDescription)
-        this.insertCell(newRow, Number(transaction.value).toFixed(2))
         this.insertCell(newRow, transaction.salesPersonName)
+        this.insertCell(newRow, new Intl.NumberFormat('pt-BR', { style: 'decimal', minimumFractionDigits: 2 }).format(transaction.value))
         this.insertCell(newRow, transaction.date.toLocaleString('pt-BR'))
       })
     }).catch(error => {
       console.error(error)
       this.messageDiv.innerHTML = 'Ocorreu um erro inesperado.'
     })
+  }
+
+  toTypeDescription (type) {
+    const descriptions = {
+      CommissionPayed: 'Comissão paga',
+      CommissionReceived: 'Comissão recebida',
+      ProducerSale: 'Venda do produtor',
+      AffiliateSale: 'Venda do afiliado'
+    }
+    return descriptions[type]
   }
 
   insertCell (row, textContent) {

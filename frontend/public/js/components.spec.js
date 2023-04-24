@@ -135,7 +135,7 @@ class FindAllTransactionsAdapterMock {
 describe('TransactionsSearch.search()', () => {
   const tests = [
     {
-      name: 'should call backend when click in search button',
+      name: 'should show transactions when click in search button',
       adapter: new FindAllTransactionsAdapterMock([{
         type: 'CommissionPayed',
         productDescription: 'Pencil',
@@ -151,10 +151,10 @@ describe('TransactionsSearch.search()', () => {
       wantPage: (page) => {
         const tableBody = page.window.document.getElementById('transactionsTable').tBodies[0]
         expect(tableBody.rows.length).toBe(1)
-        expect(tableBody.rows.item(0).cells.item(0).innerHTML).toBe('CommissionPayed')
+        expect(tableBody.rows.item(0).cells.item(0).innerHTML).toBe('Comissão paga')
         expect(tableBody.rows.item(0).cells.item(1).innerHTML).toBe('Pencil')
-        expect(tableBody.rows.item(0).cells.item(2).innerHTML).toBe('10.00')
-        expect(tableBody.rows.item(0).cells.item(3).innerHTML).toBe('Walter White')
+        expect(tableBody.rows.item(0).cells.item(2).innerHTML).toBe('Walter White')
+        expect(tableBody.rows.item(0).cells.item(3).innerHTML).toBe('10,00')
         expect(tableBody.rows.item(0).cells.item(4).innerHTML).not.toBeNull()
       },
       wantAdapterCalled: true
