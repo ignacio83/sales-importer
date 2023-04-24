@@ -1,10 +1,13 @@
 package com.afi.sales.importer.adapter.out.postgres
 
+import com.afi.sales.importer.domain.AffiliateNotFoundException
 import com.afi.sales.importer.given
 import com.afi.sales.importer.then
 import com.afi.sales.importer.whenever
+import java.lang.Exception
 import java.math.BigDecimal
 import java.util.stream.Stream
+import kotlin.reflect.KClass
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.DynamicTest.dynamicTest
@@ -60,6 +63,59 @@ class AffiliatePostgresAdapterTest : PostgresIntegrationTest() {
                     assertThat(affiliateFound).isNotNull
                     assertThat(affiliateFound.balance).isEqualTo(test.expectedBalance)
                     entityManager.remove(affiliateFound)
+                }
+            }
+        }
+    }
+
+    @TestFactory
+    fun findBalance(): Stream<DynamicTest> {
+        data class Scenario(
+            val name: String,
+            val actualAffiliate: AffiliateEntity? = null,
+            val affiliateId: Long,
+            val expectedBalance: BigDecimal? = null,
+            val expectedException: KClass<out Exception>? = null,
+        )
+        return Stream.of(
+            Scenario(
+                name = "should get balance when affiliate exists",
+                actualAffiliate = AffiliateEntity(1, BigDecimal.valueOf(2001, 2)),
+                affiliateId = 1,
+                expectedBalance = BigDecimal.valueOf(2001, 2),
+            ),
+            Scenario(
+                name = "should throw exception when affiliate does not exists",
+                affiliateId = 1,
+                expectedException = AffiliateNotFoundException::class,
+            ),
+        ).map { test ->
+            dynamicTest(test.name) {
+                given {
+                    test.actualAffiliate?.let {
+                        entityManager.persist(test.actualAffiliate)
+                    }
+                }
+                whenever {
+                    runCatching {
+                        affiliatePostgresAdapter.findBalance(test.affiliateId)
+                    }
+                } then { result ->
+                    try {
+                        result.onSuccess {
+                            assertThat(it).isEqualTo(test.expectedBalance)
+                        }.onFailure { throwable ->
+                            assertThat(throwable).isInstanceOf(test.expectedException!!.java)
+                        }
+                    } finally {
+                        test.actualAffiliate?.let {
+                            val affiliateFound = entityManager.find(
+                                AffiliateEntity::class.java,
+                                test.actualAffiliate.id,
+                            )
+                            entityManager.remove(affiliateFound)
+                        }
+                    }
                 }
             }
         }
