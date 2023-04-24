@@ -71,7 +71,7 @@ _A intenção aqui é demonstrar como as issues do projeto foram organizadas._
 | T14 | Construir serviço que realiza a importação do arquivo de vendas e armazena no banco de dados    | Finalizado |
 | T15 | Construir serviço que consulta todas as transações                                              | Finalizado |
 | T16 | Listar em tela todas as transações importadas                                                   | Finalizado |
-| T17 | Construir serviços que retornam o saldo final do produtor e do afiliado                         | Backlog    |
+| T17 | Construir serviços que retornam o saldo final do produtor e do afiliado                         | Finalizado |
 | T18 | Exibir em tela o saldo final do produtor e do afiliado                                          | Backlog    |
 | T19 | Relacionar as transações aos afiliados e aos consumidores                                       | Backlog    |
 | T20 | Construir a tela para importação do arquivo                                                     | Finalizado |
