@@ -1,4 +1,9 @@
-import { SalesFileUploadAdapter, TransactionSearchAdapter } from './adapters'
+import {
+  AffiliateBalanceAdapter,
+  ProducerBalanceAdapter,
+  SalesFileUploadAdapter,
+  TransactionSearchAdapter
+} from './adapters'
 import { compose, rest } from 'msw'
 import { setupServer } from 'msw/node'
 
@@ -147,6 +152,138 @@ describe('TransactionSearchAdapter.findAll()', () => {
           await expect(adapter.findAll()).rejects.toEqual(test.expectedError)
         } else {
           await expect(adapter.findAll()).resolves.toEqual(test.expectedJson)
+        }
+      } finally {
+        server.close()
+        server.resetHandlers()
+      }
+    })
+  })
+})
+
+describe('ProducerBalanceAdapter.findBalance()', () => {
+  const tests = [
+    {
+      name: 'should return balance when backend responds 200',
+      setupMockServer: () => {
+        const handler = rest.get(`${basePath}/api/v1/producers/1/balance`, async (req, res, ctx) => {
+          return res(ctx.json({
+            value: 12.32
+          }))
+        })
+        return setupServer(handler)
+      },
+      expected: 12.32
+    },
+    {
+      name: 'should return null when backend responds 404',
+      setupMockServer: () => {
+        const handler = rest.get(`${basePath}/api/v1/producers/1/balance`, (req, res, ctx) => {
+          return res(compose(ctx.status(404)))
+        })
+        return setupServer(handler)
+      },
+      expected: null
+    },
+    {
+      name: 'should return error when backend responds 500',
+      setupMockServer: () => {
+        const handler = rest.get(`${basePath}/api/v1/producers/1/balance`, (req, res, ctx) => {
+          return res(compose(ctx.status(500), ctx.body('Internal server error')))
+        })
+        return setupServer(handler)
+      },
+      expectedError: new Error('Unable to find producer balance')
+    },
+    {
+      name: 'should return error when backend responds 503',
+      setupMockServer: () => {
+        const handler = rest.get(`${basePath}/api/v1/producers/1/balance`, (req, res, ctx) => {
+          return res(compose(ctx.status(503), ctx.body('Service unavailable')))
+        })
+        return setupServer(handler)
+      },
+      expectedError: new Error('Unable to find producer balance')
+    }
+  ]
+
+  tests.forEach(test => {
+    it(test.name, async () => {
+      const server = test.setupMockServer()
+      server.listen()
+
+      try {
+        const adapter = new ProducerBalanceAdapter(basePath)
+        if (test.expectedError) {
+          await expect(adapter.findBalance(1)).rejects.toEqual(test.expectedError)
+        } else {
+          await expect(adapter.findBalance(1)).resolves.toEqual(test.expected)
+        }
+      } finally {
+        server.close()
+        server.resetHandlers()
+      }
+    })
+  })
+})
+
+describe('AffiliateBalanceAdapter.findBalance()', () => {
+  const tests = [
+    {
+      name: 'should return balance when backend responds 200',
+      setupMockServer: () => {
+        const handler = rest.get(`${basePath}/api/v1/affiliates/1/balance`, async (req, res, ctx) => {
+          return res(ctx.json({
+            value: 12.32
+          }))
+        })
+        return setupServer(handler)
+      },
+      expected: 12.32
+    },
+    {
+      name: 'should return null when backend responds 404',
+      setupMockServer: () => {
+        const handler = rest.get(`${basePath}/api/v1/affiliates/1/balance`, (req, res, ctx) => {
+          return res(compose(ctx.status(404)))
+        })
+        return setupServer(handler)
+      },
+      expected: null
+    },
+    {
+      name: 'should return error when backend responds 500',
+      setupMockServer: () => {
+        const handler = rest.get(`${basePath}/api/v1/affiliates/1/balance`, (req, res, ctx) => {
+          return res(compose(ctx.status(500), ctx.body('Internal server error')))
+        })
+        return setupServer(handler)
+      },
+      expectedError: new Error('Unable to find affiliate balance')
+    },
+    {
+      name: 'should return error when backend responds 503',
+      setupMockServer: () => {
+        const handler = rest.get(`${basePath}/api/v1/affiliates/1/balance`, (req, res, ctx) => {
+          return res(compose(ctx.status(503), ctx.body('Service unavailable')))
+        })
+        return setupServer(handler)
+      },
+      expectedError: new Error('Unable to find affiliate balance')
+    }
+  ]
+
+  tests.forEach(test => {
+    it(test.name, async () => {
+      const server = test.setupMockServer()
+      server.listen()
+
+      try {
+        const adapter = new AffiliateBalanceAdapter(basePath)
+        if (test.expectedError) {
+          await expect(adapter.findBalance(1)).rejects.toEqual(test.expectedError)
+        } else {
+          await expect(adapter.findBalance(1)).resolves.toEqual(test.expected)
         }
       } finally {
         server.close()

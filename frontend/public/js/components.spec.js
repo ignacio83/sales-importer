@@ -2,14 +2,14 @@
  * @jest-environment jsdom
  */
 
-import { ImportForm, TransactionsSearch } from './components'
+import { ImportForm, BalanceValue, TransactionsSearch } from './components'
 import fs from 'fs'
 import { JSDOM } from 'jsdom'
 import path from 'path'
 import userEvent from '@testing-library/user-event'
 import { getByText } from '@testing-library/dom'
 
-class SalesFileImportAdapter {
+class SalesFileImportAdapterMock {
   called = false
 
   constructor (expectedResponse, expectedError) {
@@ -34,7 +34,7 @@ describe('ImportForm.execute()', () => {
   const tests = [
     {
       name: 'should call backend when file is provided and clicks at import button',
-      adapter: new SalesFileImportAdapter({ transactionsCount: 20 }),
+      adapter: new SalesFileImportAdapterMock({ transactionsCount: 20 }),
       userInteraction: (page) => {
         const fileInput = page.window.document.getElementById('fileImporterForm').elements.namedItem('file')
         const button = getByText(page.window.document, 'Importar')
@@ -56,7 +56,7 @@ describe('ImportForm.execute()', () => {
     },
     {
       name: 'should show message when file is not provided',
-      adapter: new SalesFileImportAdapter(),
+      adapter: new SalesFileImportAdapterMock(),
       userInteraction: (page) => {
         const button = getByText(page.window.document, 'Importar')
         const user = userEvent.setup()
@@ -70,7 +70,7 @@ describe('ImportForm.execute()', () => {
     },
     {
       name: 'should show error message when error occurs',
-      adapter: new SalesFileImportAdapter(null, new Error('error')),
+      adapter: new SalesFileImportAdapterMock(null, new Error('error')),
       userInteraction: (page) => {
         const fileInput = page.window.document.getElementById('fileImporterForm').elements.namedItem('file')
         const button = getByText(page.window.document, 'Importar')
@@ -111,7 +111,7 @@ describe('ImportForm.execute()', () => {
   })
 })
 
-class FindAllTransactionsAdapter {
+class FindAllTransactionsAdapterMock {
   called = false
 
   constructor (expectedResponse, expectedError) {
@@ -136,7 +136,7 @@ describe('TransactionsSearch.search()', () => {
   const tests = [
     {
       name: 'should call backend when click in search button',
-      adapter: new FindAllTransactionsAdapter([{
+      adapter: new FindAllTransactionsAdapterMock([{
         type: 'CommissionPayed',
         productDescription: 'Pencil',
         value: 10.00,
@@ -161,7 +161,7 @@ describe('TransactionsSearch.search()', () => {
     },
     {
       name: 'should show error message when error occurs',
-      adapter: new FindAllTransactionsAdapter(null, new Error('error')),
+      adapter: new FindAllTransactionsAdapterMock(null, new Error('error')),
       userInteraction: (page) => {
         const button = getByText(page.window.document, 'Consultar')
         const user = userEvent.setup()
@@ -187,6 +187,119 @@ describe('TransactionsSearch.search()', () => {
       expect(transactionsSearch.table).toBe(transactionsTable)
       expect(transactionsSearch.searchButton).toBe(searchButton)
       expect(transactionsSearch.messageDiv).toBe(messages)
+
+      await test.userInteraction(page)
+
+      expect(test.adapter.called).toBe(test.wantAdapterCalled)
+
+      if (test.wantPage) {
+        test.wantPage(page)
+      }
+    })
+  })
+})
+
+class FindBalanceAdapterMock {
+  called = false
+
+  constructor (expectedValue, expectedError) {
+    this.expectedValue = expectedValue
+    this.expectedError = expectedError
+  }
+
+  async findBalance () {
+    this.called = true
+
+    return new Promise((resolve, reject) => {
+      if (this.expectedError) {
+        reject(this.expectedError)
+      } else {
+        resolve(this.expectedValue)
+      }
+    })
+  }
+}
+
+describe('BalanceValue.autoRefresh()', () => {
+  const tests = [
+    {
+      name: 'should show producer balance when exists',
+      adapter: new FindBalanceAdapterMock(1002.90),
+      balanceValueOutputId: 'producerBalance',
+      userInteraction: (_) => {
+        return new Promise((resolve, reject) => setTimeout(resolve, 1000))
+      },
+      wantPage: (page) => {
+        const span = page.window.document.getElementById('producerBalance')
+        expect(span.innerHTML).toBe('1.002,90')
+      },
+      wantAdapterCalled: true
+    },
+    {
+      name: 'should show 0,00 for producer when balance does exists',
+      adapter: new FindBalanceAdapterMock(null),
+      balanceValueOutputId: 'producerBalance',
+      userInteraction: (_) => {
+        return new Promise((resolve, reject) => setTimeout(resolve, 1000))
+      },
+      wantPage: (page) => {
+        const span = page.window.document.getElementById('producerBalance')
+        expect(span.innerHTML).toBe('0,00')
+      },
+      wantAdapterCalled: true
+    },
+    {
+      name: 'should show affiliate balance when exists',
+      adapter: new FindBalanceAdapterMock(2002.90),
+      balanceValueOutputId: 'affiliateBalance',
+      userInteraction: (_) => {
+        return new Promise((resolve, reject) => setTimeout(resolve, 1000))
+      },
+      wantPage: (page) => {
+        const span = page.window.document.getElementById('affiliateBalance')
+        expect(span.innerHTML).toBe('2.002,90')
+      },
+      wantAdapterCalled: true
+    },
+    {
+      name: 'should show 0,00 for affiliate when balance does exists',
+      adapter: new FindBalanceAdapterMock(null),
+      balanceValueOutputId: 'affiliateBalance',
+      userInteraction: (_) => {
+        return new Promise((resolve, reject) => setTimeout(resolve, 1000))
+      },
+      wantPage: (page) => {
+        const span = page.window.document.getElementById('affiliateBalance')
+        expect(span.innerHTML).toBe('0,00')
+      },
+      wantAdapterCalled: true
+    },
+    {
+      name: 'should show error message when error occurs',
+      adapter: new FindBalanceAdapterMock(null, new Error('error')),
+      balanceValueOutputId: 'producerBalance',
+      userInteraction: (_) => {
+        return new Promise((resolve, reject) => setTimeout(resolve, 1000))
+      },
+      wantAdapterCalled: true,
+      wantPage: (page) => {
+        const messages = page.window.document.getElementById('balanceMessages')
+        expect(messages.innerHTML).toBe('Ocorreu um erro inesperado.')
+      }
+    }
+  ]
+
+  tests.forEach(test => {
+    it(test.name, async () => {
+      const html = fs.readFileSync(path.resolve(__dirname, '../index.html'))
+      const page = new JSDOM(html)
+      const producerBalance = page.window.document.getElementById(test.balanceValueOutputId)
+      const messages = page.window.document.getElementById('balanceMessages')
+      const producerBalanceValue = new BalanceValue(producerBalance, messages, test.adapter)
+      producerBalanceValue.autoRefresh(1, 500)
+
+      expect(producerBalanceValue.valueOutput).toBe(producerBalance)
+      expect(producerBalanceValue.messageDiv).toBe(messages)
 
       await test.userInteraction(page)
 

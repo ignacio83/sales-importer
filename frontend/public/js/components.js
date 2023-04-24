@@ -61,4 +61,28 @@ class TransactionsSearch {
   }
 }
 
-export { TransactionsSearch, ImportForm }
+class BalanceValue {
+  constructor (valueOutput, messageDiv, findBalancePort) {
+    this.valueOutput = valueOutput
+    this.messageDiv = messageDiv
+    this.findBalancePort = findBalancePort
+  }
+
+  autoRefresh (id, timeout) {
+    setInterval(() => this.getBalance(id), timeout)
+  }
+
+  getBalance (id) {
+    this.findBalancePort.findBalance(id).then(value => {
+      if (value == null) {
+        value = 0
+      }
+      this.valueOutput.innerHTML = new Intl.NumberFormat('pt-BR', { style: 'decimal', minimumFractionDigits: 2 }).format(value)
+    }).catch(error => {
+      console.error(error)
+      this.messageDiv.innerHTML = 'Ocorreu um erro inesperado.'
+    })
+  }
+}
+
+export { TransactionsSearch, ImportForm, BalanceValue }
