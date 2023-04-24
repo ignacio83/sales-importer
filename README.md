@@ -13,7 +13,8 @@ Executando e construindo todo o ambiente:
 make up
 ```
 
-Então acessar: [http://localhost:3000](http://localhost:3000)
+* Frontend: [http://localhost:3000](http://localhost:3000)
+* Backend (Swagger): [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
 
 Desligando todo o ambiente:
 
@@ -75,7 +76,7 @@ _A intenção aqui é demonstrar como as issues do projeto foram organizadas._
 | T18 | Exibir em tela o saldo final do produtor e do afiliado                                          | Backlog    |
 | T19 | Relacionar as transações aos afiliados e aos consumidores                                       | Backlog    |
 | T20 | Construir a tela para importação do arquivo                                                     | Finalizado |
-| T21 | Documentar as APIs com Swagger                                                                  | Backlog    |
+| T21 | Documentar as APIs com Swagger                                                                  | Finalizado |
 
 ## ADR
 
