@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/v1/affiliate")
+@RequestMapping("/api/v1/affiliates")
 @Tag(name = "affiliate")
 class AffiliateRestController(private val getConsumerBalance: GetAffiliateBalance) {
 

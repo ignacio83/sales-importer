@@ -1,5 +1,6 @@
 package com.afi.sales.importer
 
+import com.afi.sales.importer.adapter.out.postgres.AffiliateEntity
 import com.afi.sales.importer.adapter.out.postgres.ProducerEntity
 import com.afi.sales.importer.adapter.out.postgres.TransactionEntity
 import com.afi.sales.importer.adapter.out.postgres.TransactionTypeEntity
@@ -23,7 +24,7 @@ import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.transaction.support.TransactionTemplate
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class GetProducerBalanceComponentTests(
+class GetAffiliateBalanceComponentTests(
     @LocalServerPort
     val randomServerPort: Int,
 ) : ComponentTest() {
@@ -39,26 +40,26 @@ class GetProducerBalanceComponentTests(
     fun findAll(): Stream<DynamicTest> {
         data class Scenario(
             val name: String,
-            val existentProducer: ProducerEntity? = null,
+            val existentAffiliate: AffiliateEntity? = null,
             val url: String,
             val expectedStatusCode: HttpStatusCode,
             val expectedBody: String,
         )
         return Stream.of(
             Scenario(
-                name = "should be 200 and return balance when producer exists",
-                existentProducer = ProducerEntity(1, BigDecimal.valueOf(7361, 2)),
-                url = "http://localhost:$randomServerPort/api/v1/producers/1/balance",
+                name = "should be 200 and return balance when affiliate exists",
+                existentAffiliate = AffiliateEntity(1, BigDecimal.valueOf(7361, 2)),
+                url = "http://localhost:$randomServerPort/api/v1/affiliates/1/balance",
                 expectedStatusCode = HttpStatus.OK,
                 expectedBody = """{ "value": 73.61 }""",
             ),
             Scenario(
-                name = "should be 404 when producer does not exists",
-                url = "http://localhost:$randomServerPort/api/v1/producers/1/balance",
+                name = "should be 404 when affiliate does not exists",
+                url = "http://localhost:$randomServerPort/api/v1/affiliates/1/balance",
                 expectedStatusCode = HttpStatus.NOT_FOUND,
                 expectedBody = """{
-                        "detail":"Producer 1 not found",
-                        "instance":"/api/v1/producers/1/balance",
+                        "detail":"Affiliate 1 not found",
+                        "instance":"/api/v1/affiliates/1/balance",
                         "status":404,
                         "title":"Not Found",
                         "type":"about:blank"
@@ -68,7 +69,7 @@ class GetProducerBalanceComponentTests(
             val transactionTemplate = TransactionTemplate(platformTransactionManager)
             DynamicTest.dynamicTest(test.name) {
                 given {
-                    test.existentProducer?.let { entity ->
+                    test.existentAffiliate?.let { entity ->
                         transactionTemplate.execute { _ ->
                             entityManager.persist(entity)
                         }
@@ -80,9 +81,9 @@ class GetProducerBalanceComponentTests(
                         assertThat(it.statusCode).isEqualTo(test.expectedStatusCode)
                         assertThatJson(it.body!!).isEqualTo(test.expectedBody)
                     } finally {
-                        test.existentProducer?.let { entity ->
+                        test.existentAffiliate?.let { entity ->
                             transactionTemplate.execute { _ ->
-                                entityManager.find(ProducerEntity::class.java, entity.id).let(entityManager::remove)
+                                entityManager.find(AffiliateEntity::class.java, entity.id).let(entityManager::remove)
                             }
                         }
                     }

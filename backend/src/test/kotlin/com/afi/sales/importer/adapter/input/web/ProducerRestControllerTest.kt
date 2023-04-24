@@ -88,7 +88,7 @@ class ProducerRestControllerTest {
                 given {
                     test.given(getProducerBalance)
                 } whenever {
-                    mvc.get("/api/v1/producer/1/balance")
+                    mvc.get("/api/v1/producers/1/balance")
                 } then {
                     test.expected(it)
                 }

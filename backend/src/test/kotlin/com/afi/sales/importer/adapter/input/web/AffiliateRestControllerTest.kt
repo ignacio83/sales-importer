@@ -88,7 +88,7 @@ class AffiliateRestControllerTest {
                 given {
                     test.given(getAffiliateBalance)
                 } whenever {
-                    mvc.get("/api/v1/affiliate/1/balance")
+                    mvc.get("/api/v1/affiliates/1/balance")
                 } then {
                     test.expected(it)
                 }
