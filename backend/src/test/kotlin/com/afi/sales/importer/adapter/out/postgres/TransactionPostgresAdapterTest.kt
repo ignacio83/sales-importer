@@ -2,6 +2,7 @@ package com.afi.sales.importer.adapter.out.postgres
 
 import com.afi.sales.importer.domain.Transaction
 import com.afi.sales.importer.domain.TransactionScenarios
+import com.afi.sales.importer.given
 import com.afi.sales.importer.then
 import com.afi.sales.importer.whenever
 import java.util.stream.Stream
@@ -78,5 +79,65 @@ class TransactionPostgresAdapterTest : PostgresIntegrationTest() {
                 }
             }
         }
+    }
+
+    @TestFactory
+    fun findAll(): Stream<DynamicTest> {
+        val transactionProducerSale = TransactionScenarios.producerSale()
+        val transactionAffiliateSale = TransactionScenarios.affiliateSale()
+        val transactionCommissionPayed = TransactionScenarios.commissionPayed()
+
+        data class Scenario(
+            val name: String,
+            val existentTransactions: List<TransactionEntity>,
+            val expectedTransactions: List<Transaction> = emptyList(),
+        )
+        return Stream.of(
+            Scenario(
+                name = "should find transactions when there is 3 transactions",
+                existentTransactions = toEntities(
+                    transactionProducerSale,
+                    transactionAffiliateSale,
+                    transactionCommissionPayed,
+                ),
+                expectedTransactions = listOf(
+                    transactionProducerSale,
+                    transactionAffiliateSale,
+                    transactionCommissionPayed,
+                ),
+            ),
+            Scenario(
+                name = "should find nothing when there is no transactions",
+                existentTransactions = emptyList(),
+            ),
+        ).map { test ->
+            dynamicTest(test.name) {
+                try {
+                    given {
+                        test.existentTransactions.forEach(entityManager::persistAndFlush)
+                    } whenever {
+                        transactionPostgresAdapter.findAll()
+                    } then {
+                        assertThat(it).containsExactlyInAnyOrderElementsOf(test.expectedTransactions)
+                    }
+                } finally {
+                    test.existentTransactions.forEach(entityManager::remove)
+                }
+            }
+        }
+    }
+
+    private fun toEntities(vararg transactions: Transaction): List<TransactionEntity> {
+        return transactions.map(::toEntity)
+    }
+
+    private fun toEntity(transaction: Transaction): TransactionEntity {
+        return TransactionEntity(
+            productDescription = transaction.productDescription,
+            salesPersonName = transaction.salesPersonName,
+            value = transaction.value,
+            date = transaction.date,
+            type = TransactionTypeEntity(transaction.type.id, transaction.type.name),
+        )
     }
 }
