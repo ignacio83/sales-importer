@@ -1,9 +1,9 @@
-import SalesFileUploadAdapter from './adapters'
+import { SalesFileUploadAdapter, TransactionSearchAdapter } from './adapters'
 import { compose, rest } from 'msw'
 import { setupServer } from 'msw/node'
 
 const basePath = 'http://localhost:8080'
-describe('execute()', () => {
+describe('SalesFileUploadAdapter.execute()', () => {
   const tests = [
     {
       name: 'should return transaction count when backend responds 200',
@@ -55,7 +55,7 @@ describe('execute()', () => {
         return setupServer(handler)
       },
       file: new Blob(['a mocked file'], { type: 'text/plain' }),
-      expectedError: new Error('Unable to call upload service')
+      expectedError: new Error('Unable to upload file')
     },
     {
       name: 'should return error when backend responds 503',
@@ -66,7 +66,7 @@ describe('execute()', () => {
         return setupServer(handler)
       },
       file: new Blob(['a mocked file'], { type: 'text/plain' }),
-      expectedError: new Error('Unable to call upload service')
+      expectedError: new Error('Unable to upload file')
     }
   ]
 
@@ -75,14 +75,83 @@ describe('execute()', () => {
       const server = test.setupMockServer()
       server.listen()
 
-      const adapter = new SalesFileUploadAdapter(basePath, test.timeout)
-      if (test.expectedError) {
-        await expect(adapter.execute(test.file)).rejects.toEqual(test.expectedError)
-      } else {
-        await expect(adapter.execute(test.file)).resolves.toEqual(test.expectedJson)
+      try {
+        const adapter = new SalesFileUploadAdapter(basePath)
+        if (test.expectedError) {
+          await expect(adapter.execute(test.file)).rejects.toEqual(test.expectedError)
+        } else {
+          await expect(adapter.execute(test.file)).resolves.toEqual(test.expectedJson)
+        }
+      } finally {
+        server.close()
+        server.resetHandlers()
       }
-      server.close()
-      server.resetHandlers()
+    })
+  })
+})
+
+describe('TransactionSearchAdapter.findAll()', () => {
+  const tests = [
+    {
+      name: 'should return transactions when backend responds 200',
+      setupMockServer: () => {
+        const handler = rest.get(`${basePath}/api/v1/sales/transactions`, async (req, res, ctx) => {
+          return res(ctx.json([{
+            type: 'CommissionPayed',
+            productDescription: 'Pencil',
+            value: 10.00,
+            salesPersonName: 'Walter White',
+            date: new Date('2023-03-10T13:30:02Z')
+          }]))
+        })
+        return setupServer(handler)
+      },
+      expectedJson: [{
+        type: 'CommissionPayed',
+        productDescription: 'Pencil',
+        value: 10.00,
+        salesPersonName: 'Walter White',
+        date: new Date('2023-03-10T13:30:02Z')
+      }]
+    },
+    {
+      name: 'should return error when backend responds 500',
+      setupMockServer: () => {
+        const handler = rest.get(`${basePath}/api/v1/sales/transactions`, (req, res, ctx) => {
+          return res(compose(ctx.status(500), ctx.body('Internal server error')))
+        })
+        return setupServer(handler)
+      },
+      expectedError: new Error('Unable to find all transactions')
+    },
+    {
+      name: 'should return error when backend responds 503',
+      setupMockServer: () => {
+        const handler = rest.get(`${basePath}/api/v1/sales/transactions`, (req, res, ctx) => {
+          return res(compose(ctx.status(503), ctx.body('Service unavailable')))
+        })
+        return setupServer(handler)
+      },
+      expectedError: new Error('Unable to find all transactions')
+    }
+  ]
+
+  tests.forEach(test => {
+    it(test.name, async () => {
+      const server = test.setupMockServer()
+      server.listen()
+
+      try {
+        const adapter = new TransactionSearchAdapter(basePath)
+        if (test.expectedError) {
+          await expect(adapter.findAll()).rejects.toEqual(test.expectedError)
+        } else {
+          await expect(adapter.findAll()).resolves.toEqual(test.expectedJson)
+        }
+      } finally {
+        server.close()
+        server.resetHandlers()
+      }
     })
   })
 })

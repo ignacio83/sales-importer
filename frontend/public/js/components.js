@@ -21,11 +21,44 @@ class ImportForm {
         }).catch(error => {
           console.error(error)
           fileInput.value = ''
-          this.messageDiv.innerHTML = 'Ocorreu um erro inesperado'
+          this.messageDiv.innerHTML = 'Ocorreu um erro inesperado.'
         })
     }
     this.importButton.disabled = false
   }
 }
 
-export default ImportForm
+class TransactionsSearch {
+  constructor (table, searchButton, messageDiv, findAllTransactionsPort) {
+    this.table = table
+    this.searchButton = searchButton
+    this.messageDiv = messageDiv
+    this.findAllTransactionsPort = findAllTransactionsPort
+    this.searchButton.onclick = _ => this.search()
+  }
+
+  search () {
+    this.findAllTransactionsPort.findAll().then(transactions => {
+      const tbody = this.table.getElementsByTagName('tbody')[0]
+      tbody.innerHTML = ''
+      transactions.forEach(transaction => {
+        const newRow = tbody.insertRow()
+        this.insertCell(newRow, transaction.type)
+        this.insertCell(newRow, transaction.productDescription)
+        this.insertCell(newRow, Number(transaction.value).toFixed(2))
+        this.insertCell(newRow, transaction.salesPersonName)
+        this.insertCell(newRow, transaction.date.toLocaleString('pt-BR'))
+      })
+    }).catch(error => {
+      console.error(error)
+      this.messageDiv.innerHTML = 'Ocorreu um erro inesperado.'
+    })
+  }
+
+  insertCell (row, textContent) {
+    const typeCell = row.insertCell()
+    typeCell.innerHTML = textContent
+  }
+}
+
+export { TransactionsSearch, ImportForm }
